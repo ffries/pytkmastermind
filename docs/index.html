@@ -17,11 +17,21 @@
        <section>
          <h2>Participer</h2>
          <article>
-         		<h3>Utilisation de Git</h3>
+         		<h3>Utilisation de Git : premiers pas</h3>
         	 	<p>
-           		Pour participer au projet, il faut au préalable disposer d'un compte <a href="https://github.com">Github</a> et avoir configuré un <a href="https://github.com/settings/tokens">token</a> (jeton d'accès). 
+           		Pour participer au projet, il faut au préalable disposer d'un compte <a href="https://github.com">Github</a> et avoir configuré un <a href="https://github.com/settings/tokens">token</a> (jeton d'accès). Il existe deux manières de communiquer avec le git de Github : via HTTPS et avec mot de passe ou via SSH avec une clé SSH. Les utilisateurs de MacOSX et Linux peuvent privilégier l'approche via SSH.
          		</p>
-                       
+         		
+         		<p>
+         		Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faut au préalable créer une cléé SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
+         		</p>
+                 
+            <pre class="command-line">ssh-keygen -t ed25519</pre>
+            
+            <p>
+              Sur Github installer la clé SSH publique (extension .pub) dans le <a href="https://github.com/settings/keys">gestionnaire de clés Github</a>.
+            </p>
+                 
          		<p>
            		Pour configurer Git :
          		</p>
@@ -30,9 +40,14 @@ git config --global user.email "email@example.com"	#Définit son email
 git config -l	#Liste la configuration actuelle</pre>
 
          		<p>
-           		Pour récupérer les sources du projet, créer un dossier projet sur votre ordinateur. Ensuite, cloner le repository (dépôt) Github vers votre ordinateur avec cette commande :
+           		Pour récupérer les sources du projet, créer un dossier <strong>projet</strong> sur votre ordinateur. Depuis le dossier <strong>projet</strong> créé localement, cloner le repository (dépôt) Github en HTTPS vers votre ordinateur avec cette commande :
          		</p>
          		<pre class="command-line">git clone https://github.com/ffries/pytkmastermind.git</pre>
+         
+            <p>
+           		En SSH, la ligne de commande permettant de cloner est légèrement différente :
+         		</p>
+         		<pre class="command-line">git clone git@github.com:ffries/pytkmastermind.git</pre>
          
          		<p>
            		Le dossier <strong>pytkmastermind</strong> contient les fichiers du projet et le dossier <strong>docs</strong> de l'aborescence du site Internet.
@@ -71,8 +86,22 @@ total 16K
          		<pre class="command-line">git commit -m "Message de log décrivant brièvement les modifications"
 git push -u origin main</pre>
 					</article>
-					
+          
           <article>
+         		<h3>Utilisation de Git : travail collaboratif</h3>
+         		
+         		<p>
+					    Pour connaître le statut de votre dépôt local :
+					  </p>
+					
+					  <pre class="command-line">git status</pre>
+					  
+					  <p>
+					    Pour résoudre les conflits
+					  </p>
+         	</article>
+         	
+         	<article>
          		<h3>Coding guidelines</h3>
          		
          		<p>Fichiers HTML : indentation 2 caractères.</p>
