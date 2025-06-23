@@ -1,0 +1,26 @@
+Nom et types des variables
+
+Variables globales :
+nbparties: le nombre de parties par joueur.
+largeurfenetre : entier, largeur de la fenêtre
+hauteurfenetre : entier, hauteur de la fenêtre
+listejoueur: liste, strings des noms des deux joueurs
+decodeur: numéro de joueur décodant
+codeur: numéro de joueur codant
+nbcouleurs: entier, nombre de couleurs, valeur par défaut 6
+dictcouleurs: dictionnaire de couleurs de -2 à n-1. -1 couleur de fond, -2 couleur pion vide.
+nbcolonnes: entier, nombre de pions à jouer, 4 par défaut
+nblignes: entier, nombre de coups à jouer, 10 par défaut
+colonne: colonne en cours de jeu
+ligne: ligne en cours de jeu
+pasx: entier, pas horizontal entre deux centres de pions
+pasy: entier, pas vertical entre deux centres de pions
+matjeu: liste de listes, de dimension nblignes+1, nbcolonnes. La dernière ligne contient le code secret.
+matreponse : de dimension nblignes, nbcolonnes.
+message : message affiché à l'écran.
+
+Fonctions :
+feedback (matjeu, matreponse): renvoie true si on a gagne ou false si on continue le jeu. Met à jour matreponse.
+choisircouleur(matjeu,numérocouleur): renvoie none. Elle incrémente la colonne en cours, affiche la couleur et met à jour la matrice de jeu.
+validerligne(matjeu): incrémente la ligne, met la colonne à 0, elle appelle feedback.
+
