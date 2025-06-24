@@ -22,6 +22,7 @@ nblignes=10
 colonne=0
 ligne=0
 matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
+matjeu[nblignes]=[i for i in range(nbcolonnes)]
 matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
 
 # Fonctions
@@ -90,25 +91,28 @@ def choisircouleur(matrice,numerocouleur):
     print("couleur bouton:",dictcouleurs[numerocouleur])
     cercle(canvaslignes[ligne],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
     matrice[ligne][colonne]=numerocouleur
-    print(matrice)
+    print(matrice,str(matrice))
     if(colonne<nbcolonnes):
         colonne+=1
-    print (colonne)
     return None
 
-def feedback (matjeu, matreponse):
+def feedback(matjeu, matreponse):
     global nbcolonnes
-    global nbligne
+    global nblignes
+    global ligne
+    global colonne
     
     # Le secret est le dernière ligne de la matrice de jeu
-    tupSecret=matjeu[nbligne]
+    tupSecret=matjeu[nblignes]
     
     # La liste réponse est la ligne en cours
     ListeReponse=matjeu[ligne]
 
-    
+    print(tupSecret,ListeReponse)
     black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
+    print(black)
     white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
+    print(white)
     
     # On remplit la matrice réponse avec les blacks et les white
     for i in range(black):
@@ -120,6 +124,7 @@ def feedback (matjeu, matreponse):
     # On incrémente la ligne et on remet la colonne à zéro
     ligne+=1
     colonne=0
+    print(matreponse,"matreponse")
     if black==nbcolonnes :
         return True
     return False
@@ -158,7 +163,7 @@ canvasreponses[nblignes]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolo
 canvasreponses[nblignes].pack()
 
 # Espace commande
-button = tk.Button(espacecommande,text="Cliquez ici", command=jouer)
+button = tk.Button(espacecommande,text="Valider", command=lambda :feedback(matjeu,matreponse))
 button.pack(side="bottom")
 buttonquit=tk.Button(espacecommande, text = 'Quitter', command = root.destroy)
 buttonquit.pack(side="bottom")
