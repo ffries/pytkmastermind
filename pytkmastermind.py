@@ -105,6 +105,10 @@ def feedback (matjeu, matreponse):
     
     # La liste réponse est la ligne en cours
     ListeReponse=matjeu[ligne]
+
+    
+    black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
+    white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
     
     # On remplit la matrice réponse avec les blacks et les white
     for i in range(black):
@@ -112,10 +116,7 @@ def feedback (matjeu, matreponse):
     
     for j in range(white):
         matreponse[ligne][black+j]=1
-    
-    black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
-    white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
-    
+        
     # On incrémente la ligne et on remet la colonne à zéro
     ligne+=1
     colonne=0
