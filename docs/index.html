@@ -18,12 +18,21 @@
          <h2>Participer</h2>
          <article>
          		<h3>Utilisation de Git : premiers pas</h3>
+         		
+         		<p>
+         		  git est un outil de gestion décentralisé de version du code créé par Linus Thorvalds. git est installé en standard sur les systèmes d'exploitation Windows et MacOS. Sous Windows, il faudra télécharger git <a href="https://git-scm.com/downloads/win">ici</a>.
+         		</p>
+         		
         	 	<p>
-           		Pour participer au projet, il faut au préalable disposer d'un compte <a href="https://github.com">Github</a> et avoir configuré un <a href="https://github.com/settings/tokens">token</a> (jeton d'accès). Il existe deux manières de communiquer avec le git de Github : via HTTPS et avec mot de passe ou via SSH avec une clé SSH. Les utilisateurs de MacOSX et Linux peuvent privilégier l'approche via SSH.
+           		Pour participer au projet, il est nécessaire de créer un compte sur <a href="https://github.com">Github</a>. Il existe deux manières de communiquer avec le git de Github : via HTTPS et avec mot de passe ou via SSH avec une clé SSH. Les utilisateurs de MacOSX et Linux peuvent privilégier la connexion via SSH. Les utilisateurs de Windows qui ne disposent pas de SSH peuvent privilégier la connexion via HTTPS. Quand on a le choix entre les deux modes de connexion, il vaut mieux privilégier SSH.
          		</p>
          		
          		<p>
-         		Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faut au préalable créer une cléé SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
+         		  Si vous vous connectez à <a href="https://github.com">Github</a> via HTTPS, il faudra au préalable configurer un <a href="https://github.com/settings/tokens">jeton d'accès</a>. Pour des raisons de sécurité, cela revient à créer un mot de passe dédié à l'usage de git, différent du mot de passe utilisé pour votre compte <a href="https://github.com">Github</a>.
+         		</p>
+         		
+         		<p>
+         		  Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faudra au préalable créer une cléé SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
          		</p>
                  
             <pre class="command-line">ssh-keygen -t ed25519</pre>
@@ -33,7 +42,7 @@
             </p>
                  
          		<p>
-           		Pour configurer Git :
+           		Ensuite, sur votre ordinateur, il faut configurer Git :
          		</p>
 <pre class="command-line">git config --global user.name "Nom"	#Définit son nom
 git config --global user.email "email@example.com"	#Définit son email
