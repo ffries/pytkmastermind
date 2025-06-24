@@ -32,17 +32,17 @@
          		</p>
          		
          		<p>
-         		  Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faudra au préalable créer une cléé SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
+         		  Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faudra au préalable créer une clée SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
          		</p>
                  
             <pre class="command-line">ssh-keygen -t ed25519</pre>
             
             <p>
-              Sur Github installer la clé SSH publique (extension .pub) dans le <a href="https://github.com/settings/keys">gestionnaire de clés Github</a>.
+              Cette commande créer un dossier .ssh (dossier caché) à la racinde de votre dossier utilisateur, contenant la clé privée <strong>id_ed25519</strong> et de la clé publique <strong>id_ed25519.pub</strong>. Le contenu de la clé privée doit rester secrète et ne doit jamais être tranmis. Le contenu de la clé publique pourra transmis à un tiers, par exemple à Github. Sur Github installer la clé SSH publique (contenu du fichier id_ed25519.pub) dans le <a href="https://github.com/settings/keys">gestionnaire de clés Github</a>.
             </p>
                  
          		<p>
-           		Ensuite, sur votre ordinateur, il faut configurer Git :
+           		Ensuite, sur votre ordinateur, il reste à configurer Git :
          		</p>
 <pre class="command-line">git config --global user.name "Nom"	#Définit son nom
 git config --global user.email "email@example.com"	#Définit son email
@@ -76,6 +76,17 @@ total 16K
 -rw-rw-r-- 1 mario mario 2,6K 20 juin  15:36 index.html
 -rw-rw-r-- 1 mario mario  801 20 juin  15:04 styles.css</pre>
 
+					</article>
+          
+          <article>
+         		<h3>Utilisation de Git : travail collaboratif</h3>
+         		
+         		<p>
+					    Pour connaître le statut de votre dépôt local :
+					  </p>
+					
+					  <pre class="command-line">git status</pre>
+
          		<p>
            		Pour récupérer et fusionner les changements depuis le repository distant vers votre ordinateur :
          		</p>
@@ -92,21 +103,11 @@ total 16K
            		Pour enregistrer les modifications dans l'historique et publier les modifications depuis votre ordinateur vers le repository distant :
          		</p>
          
-         		<pre class="command-line">git commit -m "Message de log décrivant brièvement les modifications"
+         		<pre class="command-line">git commit -m "Message de log décrivant brièvement les modifications" monfichier.py
 git push -u origin main</pre>
-					</article>
-          
-          <article>
-         		<h3>Utilisation de Git : travail collaboratif</h3>
-         		
-         		<p>
-					    Pour connaître le statut de votre dépôt local :
-					  </p>
-					
-					  <pre class="command-line">git status</pre>
 					  
 					  <p>
-					    Pour résoudre les conflits
+					    Quand on travaille à plusieurs, il faudra parfois résoudre les conflits entre les différentes versions du code.
 					  </p>
          	</article>
          	
