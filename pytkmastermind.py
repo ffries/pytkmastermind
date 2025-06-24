@@ -1,8 +1,6 @@
 #Créé par quertier2, le 20/06/2025 en Python
 #Bibliotheques
 import tkinter as tk
-import numpy as np
-
 
 #variables globales
 pas=4
@@ -17,7 +15,8 @@ listejoueur=["toto","tata"]
 decodeur=0
 codeur=1
 nbcouleurs=6
-dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"black",5:"white"}
+dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
+dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
 nbcolonnes=5
 nblignes=10
 colonne=0
@@ -96,6 +95,33 @@ def choisircouleur(matrice,numerocouleur):
         colonne+=1
     print (colonne)
     return None
+
+def feedback (matjeu, matreponse):
+    global nbcolonnes
+    global nbligne
+    
+    # Le secret est le dernière ligne de la matrice de jeu
+    tupSecret=matjeu[nbligne]
+    
+    # La liste réponse est la ligne en cours
+    ListeReponse=matjeu[ligne]
+    
+    # On remplit la matrice réponse avec les blacks et les white
+    for i in range(black):
+        matreponse[ligne][i]=0
+    
+    for j in range(white):
+        matreponse[ligne][black+j]=1
+    
+    black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
+    white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
+    
+    # On incrémente la ligne et on remet la colonne à zéro
+    ligne+=1
+    colonne=0
+    if black==nbcolonnes :
+        return True
+    return False
 
 # Création de la fenêtre principale
 root = tk.Tk()
