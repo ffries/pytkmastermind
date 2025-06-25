@@ -1,10 +1,65 @@
-/* === Style global de la page === */
+/* Réinitialisation des marges et paddings */
+
+
 body {
-  font-family: system-ui, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  line-height: 1.6;
-  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+/* Conteneur principal */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+}
+
+/* Conteneur du logo et du titre */
+#logo-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#logo {
+  width: 50px;
+  margin-right: 10px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+/* Style du menu */
+#main-menu {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  background-color: #333;
+  width: 100%;
+}
+
+#main-menu > li {
+  flex-grow: 1;
+  text-align: center;
+}
+
+#main-menu li a {
+  display: block;
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+#main-menu li a:hover {
+  background-color: #111;
+}
+
+#main-menu li a.active {
+  background-color: #04AA6D;
 }
 
 /* === Titres === */
@@ -45,6 +100,5 @@ pre.command-line::before {
   color: white;
   font-weight: bold;
 }
-
 
 
