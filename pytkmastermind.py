@@ -9,7 +9,7 @@ rmarqueur=(2*rpion-pas)/4
 rtrou=rpion/4
 rptrou=rmarqueur/4
 hligne=2*(pas+rpion)
-
+#Rajouter numéro de la partie
 nbparties=1
 listejoueur=["toto","tata"]
 decodeur=0
@@ -17,7 +17,7 @@ codeur=1
 nbcouleurs=6
 dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
 dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
-nbcolonnes=7
+nbcolonnes=5
 nblignes=10
 colonne=0
 ligne=0
@@ -85,18 +85,30 @@ def jouer():
     ligne_jeu(cnv,coup, dictcouleurs, ((4*hauteurfenetre)/5)/((nblignes+1)))
 
 def choisircouleur(matrice,numerocouleur):
+   
     global ligne
     global colonne
     global dictcouleurs
-    print("couleur bouton:",dictcouleurs[numerocouleur])
-    cercle(canvaslignes[ligne],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
-    matrice[ligne][colonne]=numerocouleur
-    print(matrice,str(matrice))
-    if(colonne<nbcolonnes-1):
+    
+    if(colonne<nbcolonnes): #pour éviter le dépassement vers la droite 
+        print("couleur bouton:",dictcouleurs[numerocouleur])
+        cercle(canvaslignes[ligne],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
+        matrice[ligne][colonne]=numerocouleur
+        print(matrice,str(matrice))
         colonne+=1
     return None
 
+def choisircode(matrice,numerocouleur):
+    global ligne
+    global colonne
+    global dictcouleurs
+    cercle(canvaslignes[nblignes],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
+    matrice[nblignes][colonne]=numerocouleur
+    #Reste à gérer le cache
+    
+
 def feedback(matjeu, matreponse):
+    #reste à traiter la victoire
     global nbcolonnes
     global nblignes
     global ligne
@@ -110,26 +122,25 @@ def feedback(matjeu, matreponse):
 
     print(tupSecret,ListeReponse)
     black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
+    print(black)
     white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
+    print(white)
     
-    # On remplit la matrice réponse avec les blacks et les white
+    # On remplit la matrice réponse avec les blacks et les white et l'espace de jeu
     for i in range(black):
         matreponse[ligne][i]=0
-    
+        cercle(canvasreponses[ligne],pas+rmarqueur+i//2*(pas+2*rmarqueur),pas+rmarqueur+i%2*(pas+2*rmarqueur),rptrou,dictcouleursreponse[0])
+
     for j in range(white):
         matreponse[ligne][black+j]=1
-        
-    # On dessine les pions
-    for i in range(nbcolonnes):
-        if matreponse[ligne][i]!=-1:
-            xcercle=pas+rmarqueur+i%(nbcolonnes//2++nbcolonnes%2)*(pas+2*rmarqueur)
-            ycercle=pas+rmarqueur+i//(nbcolonnes//2+nbcolonnes%2)*(pas+2*rmarqueur)
-            cercle(canvasreponses[ligne],xcercle,ycercle,rmarqueur,dictcouleursreponse[matreponse[ligne][i]])
-        
+        cercle(canvasreponses[ligne],pas+rmarqueur+(black+j)//2*(pas+2*rmarqueur),pas+rmarqueur+(black+j)%2*(pas+2*rmarqueur),rptrou,dictcouleursreponse[1])
+   
+    canvasreponses[ligne].pack()
+    
     # On incrémente la ligne et on remet la colonne à zéro
     ligne+=1
     colonne=0
-    
+    print(matreponse,"matreponse")
     if black==nbcolonnes :
         return True
     return False
@@ -142,11 +153,26 @@ root.title("Mastermind")
 espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
 espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")
 
+espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)
+
 espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 espacejeu.pack(side="left",padx=0, pady=10)
 
 espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 espacereponse.pack(side="left",padx=0, pady=10)
+
+#espace affichage
+labelnbparties = tk.Label(espaceaffichage, text="Partie sur "+str(nbparties))
+labelnbparties.pack(side="top")
+labeljoueur1=tk.Label(espaceaffichage,text="Codeur :"+listejoueur[codeur])
+labeljoueur1.pack(side="top")
+labelscore1=tk.Label(espaceaffichage,text="Score :")
+labelscore1.pack(side="top")
+labeljoueur2=tk.Label(espaceaffichage,text="Decodeur :"+listejoueur[decodeur])
+labeljoueur2.pack(side="top")
+labelscore2=tk.Label(espaceaffichage,text="Score :")
+labelscore2.pack(side="top")
 
 # Lignes complétée par le décodeur
 canvaslignes=[0]*(nblignes+1)
@@ -156,7 +182,7 @@ for i in range(nblignes+1):
         cercle(canvaslignes[i],pas+rpion+j*(pas+2*rpion),hligne/2,rtrou,dictcouleurs[-2])
     canvaslignes[i].pack()
 
-# Lignes de réponses
+# Lignes de 
 canvasreponses=[0]*(nblignes+1)
 for i in range(nblignes):
     canvasreponses[i]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolonnes%2)*(2*rmarqueur+pas),height=hligne,bg=dictcouleurs[-1])
@@ -168,8 +194,7 @@ canvasreponses[nblignes]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolo
 canvasreponses[nblignes].pack()
 
 # Espace commande
-button = tk.Button(espacecommande,text="Valider", command=lambda :feedback(matjeu,matreponse))
-button.pack(side="bottom")
+
 buttonquit=tk.Button(espacecommande, text = 'Quitter', command = root.destroy)
 buttonquit.pack(side="bottom")
 #Initialisation de la liste qui va contenir les boutons de couleurs
@@ -183,6 +208,8 @@ for i in range(nbcouleurs):
     #i=i permet de garder la valeur actuelle de i sinon on capteur la référence à la variable i qui continue d'évoluer et vaut 5 quand on clique sur le bouton
     boutons_couleur[i]=tk.Button(espacecommande,text=dictcouleurs[i],command=lambda ifixe=i:choisircouleur(matjeu,ifixe))
     boutons_couleur[i].pack(side="left", fill="x", expand=1)
+button = tk.Button(espacecommande,text="Valider", command=lambda :feedback(matjeu,matreponse))
+button.pack(side="left")
 # boutons_couleur[0]=tk.Button(espacecommande,text=dictcouleurs[0],command=lambda:choisircouleur(matjeu,0))
 # boutons_couleur[0].pack(side="left", fill="x", expand=1)
 # boutons_couleur[1]=tk.Button(espacecommande,text=dictcouleurs[1],command=lambda:choisircouleur(matjeu,1))
