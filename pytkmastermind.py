@@ -17,7 +17,7 @@ codeur=1
 nbcouleurs=6
 dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
 dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
-nbcolonnes=5
+nbcolonnes=7
 nblignes=10
 colonne=0
 ligne=0
@@ -92,7 +92,7 @@ def choisircouleur(matrice,numerocouleur):
     cercle(canvaslignes[ligne],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
     matrice[ligne][colonne]=numerocouleur
     print(matrice,str(matrice))
-    if(colonne<nbcolonnes):
+    if(colonne<nbcolonnes-1):
         colonne+=1
     return None
 
@@ -110,9 +110,7 @@ def feedback(matjeu, matreponse):
 
     print(tupSecret,ListeReponse)
     black = sum(s==g for s,g in zip(tupSecret,ListeReponse))
-    print(black)
     white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black
-    print(white)
     
     # On remplit la matrice réponse avec les blacks et les white
     for i in range(black):
@@ -121,10 +119,17 @@ def feedback(matjeu, matreponse):
     for j in range(white):
         matreponse[ligne][black+j]=1
         
+    # On dessine les pions
+    for i in range(nbcolonnes):
+        if matreponse[ligne][i]!=-1:
+            xcercle=pas+rmarqueur+i%(nbcolonnes//2++nbcolonnes%2)*(pas+2*rmarqueur)
+            ycercle=pas+rmarqueur+i//(nbcolonnes//2+nbcolonnes%2)*(pas+2*rmarqueur)
+            cercle(canvasreponses[ligne],xcercle,ycercle,rmarqueur,dictcouleursreponse[matreponse[ligne][i]])
+        
     # On incrémente la ligne et on remet la colonne à zéro
     ligne+=1
     colonne=0
-    print(matreponse,"matreponse")
+    
     if black==nbcolonnes :
         return True
     return False
@@ -151,7 +156,7 @@ for i in range(nblignes+1):
         cercle(canvaslignes[i],pas+rpion+j*(pas+2*rpion),hligne/2,rtrou,dictcouleurs[-2])
     canvaslignes[i].pack()
 
-# Lignes de 
+# Lignes de réponses
 canvasreponses=[0]*(nblignes+1)
 for i in range(nblignes):
     canvasreponses[i]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolonnes%2)*(2*rmarqueur+pas),height=hligne,bg=dictcouleurs[-1])
