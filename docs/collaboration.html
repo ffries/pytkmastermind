@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>pyTkMasterMind</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="styles.css"/>
+  </head>
+  <body>
+    <!-- Header : contient la barre de navigation -->
+    <header>
+      <div id="logo-title">
+        <img src="img/logo-pytkmastermind.png" alt="Logo pyTkMasterMind" id="logo"/>
+        <h1>pyTkMasterMind</h1>
+      </div>
+      <nav>
+        <ul id="main-menu">
+          <li><a href="index.html" class="active">Accueil</a></li>
+          <li><a href="objectifs.html">Objectifs</a></li>
+          <li><a href="interface.html">Interface</a></li>
+          <li><a href="analyse_fonctionnelle.html">Analyse fonctionnelle</a></li>
+          <li><a href="collaboration.html">Collaboration</a></li>
+          <li><a href="bilan.html">Bilan</a></li>
+        </ul>
+      </nav>
+    </header>
+  
+    <main>
+       <section>
+         <h2>Collaboration</h2>
+         
+          <article>
+         		<h3>Utilisation de Git : premiers pas</h3>
+         		
+         		<p>
+         		  git est un outil de gestion décentralisé de version du code créé par Linus Thorvalds. git est installé en standard sur les systèmes d'exploitation Windows et MacOS. Sous Windows, il faudra télécharger git <a href="https://git-scm.com/downloads/win">ici</a>.
+         		</p>
+         		
+        	 	<p>
+           		Pour participer au projet, il est nécessaire de créer un compte sur <a href="https://github.com">Github</a>. Il existe deux manières de communiquer avec le git de Github : via HTTPS et avec mot de passe ou via SSH avec une clé SSH. Les utilisateurs de MacOSX et Linux peuvent privilégier la connexion via SSH. Les utilisateurs de Windows qui ne disposent pas de SSH peuvent privilégier la connexion via HTTPS. Quand on a le choix entre les deux modes de connexion, il vaut mieux privilégier SSH.
+         		</p>
+         		
+         		<p>
+         		  Si vous vous connectez à <a href="https://github.com">Github</a> via HTTPS, il faudra au préalable configurer un <a href="https://github.com/settings/tokens">jeton d'accès</a>. Pour des raisons de sécurité, cela revient à créer un mot de passe dédié à l'usage de git, différent du mot de passe utilisé pour votre compte <a href="https://github.com">Github</a>.
+         		</p>
+         		
+         		<p>
+         		  Si vous vous connectez au serveur <a href="https://github.com">Github</a> via SSH, il faudra au préalable créer une clée SSH (bien noter le mot de passe qui vous sera demandé à la création) : 
+         		</p>
+                 
+            <pre class="command-line">ssh-keygen -t ed25519</pre>
+            
+            <p>
+              Cette commande créer un dossier .ssh (dossier caché) à la racinde de votre dossier utilisateur, contenant la clé privée <strong>id_ed25519</strong> et de la clé publique <strong>id_ed25519.pub</strong>. Le contenu de la clé privée doit rester secrète et ne doit jamais être tranmis. Le contenu de la clé publique pourra transmis à un tiers, par exemple à Github. Sur Github installer la clé SSH publique (contenu du fichier id_ed25519.pub) dans le <a href="https://github.com/settings/keys">gestionnaire de clés Github</a>.
+            </p>
+                 
+         		<p>
+           		Ensuite, sur votre ordinateur, il reste à configurer Git :
+         		</p>
+<pre class="command-line">git config --global user.name "Nom"	#Définit son nom
+git config --global user.email "email@example.com"	#Définit son email
+git config -l	#Liste la configuration actuelle</pre>
+
+         		<p>
+           		Pour récupérer les sources du projet, créer un dossier <strong>projet</strong> sur votre ordinateur. Depuis le dossier <strong>projet</strong> créé localement, cloner le repository (dépôt) Github en HTTPS vers votre ordinateur avec cette commande :
+         		</p>
+         		<pre class="command-line">git clone https://github.com/ffries/pytkmastermind.git</pre>
+         
+            <p>
+           		En SSH, la ligne de commande permettant de cloner est légèrement différente :
+         		</p>
+         		<pre class="command-line">git clone git@github.com:ffries/pytkmastermind.git</pre>
+         
+         		<p>
+           		Le dossier <strong>pytkmastermind</strong> contient les fichiers du projet et le dossier <strong>docs</strong> de l'aborescence du site Internet.
+         		</p>
+        		
+<pre class="command-line">ls -lhR pytkmastermind/
+pytkmastermind/:
+total 52K
+-rw-rw-r-- 1 mario mario   17 19 juin  12:55 bac_a_sable.txt
+drwxrwxr-x 2 mario mario 4,0K 20 juin  15:36 html
+-rw-rw-r-- 1 mario mario  35K 18 juin  18:44 LICENSE
+-rw-rw-r-- 1 mario mario  108 20 juin  15:39 pytkmastermind.py
+-rw-rw-r-- 1 mario mario   21 18 juin  18:44 README.md
+
+pytkmastermind/docs:
+total 16K
+-rw-rw-r-- 1 mario mario 2,6K 20 juin  15:36 index.html
+-rw-rw-r-- 1 mario mario  801 20 juin  15:04 styles.css</pre>
+
+					</article>
+          
+          <article>
+         		<h3>Utilisation de Git : travail collaboratif</h3>
+         		
+         		<p>
+					    Pour connaître le statut de votre dépôt local :
+					  </p>
+					
+					  <pre class="command-line">git status</pre>
+
+         		<p>
+           		Pour récupérer et fusionner les changements depuis le repository distant vers votre ordinateur :
+         		</p>
+         
+         		<pre class="command-line">git pull</pre>
+         
+         		<p>
+           		Pour ajouter un nouveau fichier au projet :
+         		</p>
+         
+         		<pre class="command-line">git add fichier.py</pre>
+         
+         		<p>
+           		Pour enregistrer les modifications dans l'historique et publier les modifications depuis votre ordinateur vers le repository distant :
+         		</p>
+         
+         		<pre class="command-line">git commit -m "Message de log décrivant brièvement les modifications" monfichier.py
+git push -u origin main</pre>
+					  
+					  <p>
+					    Quand on travaille à plusieurs, il faudra parfois résoudre les conflits entre les différentes versions du code.
+					  </p>
+         	</article>
+         	
+         	<article>
+         		<h3>Coding guidelines</h3>
+         		
+         		<p>Fichiers HTML : indentation 2 caractères.</p>
+						<p>Fichiers Python : indentation 4 caractères.</p>
+          </article>
+       </section>
+    </main>
+    
+    <footer>
+    </footer>
+  </body>
+</html>
