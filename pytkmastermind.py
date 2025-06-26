@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 #Créé par quertier2, le 20/06/2025 en Python
 #Bibliotheques
 import tkinter as tk
