@@ -33,10 +33,18 @@ dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",
 dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
 colonne=0
 ligne=0
+
+root = tk.Tk()
+espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
+espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+
 matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
 matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
 canvaslignes=[0]*(nblignes+1)
 canvasreponses=[0]*(nblignes+1)
+
 
 # Fonctions
 def cercle(canva,x,y,r,couleur):
@@ -73,6 +81,7 @@ def bouton_valider():
     if colonne==nbcolonnes:
         if decodeur:
             if feedback(matjeu, matreponse):
+               
                 print("Victoire !")
                 # Il reste à tout remettre à zéro pour recommencer une nouvelle partie
             elif ligne==nblignes-1:
@@ -85,6 +94,8 @@ def bouton_valider():
         else:
             # On passe au joueur decodeur
             print("Code secret validé. On passe au joueur décodeur !")
+            #Vidage du canvas de codage
+            canvaslignes[nblignes].delete('all')
             ligne=0
             colonne=0
             decodeur=not decodeur
@@ -190,16 +201,23 @@ def feedback(matJ, matR):
         return True
     return False
 
-def creation_fenetre_principale(canvasL,canvasR):
+
+
+def jeu_fenetre_principale(canvasL,canvasR):
     """
-    Création de la fenêtre principale, avec l'interface graphique Tkinter
+    Fonction qui remplit les pions au fur et maesure du jeu dans la fenêtre principale
+
     Parameters
     ----------
-    canvasL : le canvas permettant d'afficher les pions dans la partie coder ou décoder
-    canvasR : le canvas permettant d'afficher les pions dans la partie résultats
-    ----------
-    Returns None.
+    canvasL : Liste de Canvas conenant les lignes jouées par le codeur
+    canvasR : Liste de Canvas contenant les lignes jouées par le décodeur
+
+    Returns
+    -------
+    None.
+
     """
+    #Il reste à retire les variables globales inutiles
     global pas
     global nbparties
     global listejoueur
@@ -213,35 +231,11 @@ def creation_fenetre_principale(canvasL,canvasR):
     global rmarqueur
     global rptrou
     global nbcouleurs
-    
-    root = tk.Tk()
-    root.title("Mastermind")
-    # Chaine de caractère pour definir la surface de la fenetre en fonction de la largeur et de la hauteur définies
-    # Création des Label frame poour séparer l'espace de jeu du panneau de commande
-    espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
-    espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")
-
-    espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-    espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)
-
-    espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-    espacejeu.pack(side="left",padx=0, pady=10)
-
-    espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-    espacereponse.pack(side="left",padx=0, pady=10)
-
-    # Espace affichage
-    labelnbparties = tk.Label(espaceaffichage, text="Partie sur "+str(nbparties))
-    labelnbparties.pack(side="top")
-    labeljoueur1=tk.Label(espaceaffichage,text="Codeur :"+listejoueur[int(not decodeur)])
-    labeljoueur1.pack(side="top")
-    labelscore1=tk.Label(espaceaffichage,text="Score :")
-    labelscore1.pack(side="top")
-    labeljoueur2=tk.Label(espaceaffichage,text="Decodeur :"+listejoueur[int(decodeur)])
-    labeljoueur2.pack(side="top")
-    labelscore2=tk.Label(espaceaffichage,text="Score :")
-    labelscore2.pack(side="top")
-
+    global root
+    # global espacecommande
+    # global espaceaffichage
+    global espacejeu
+    global espacereponse
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
         canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])
@@ -259,8 +253,117 @@ def creation_fenetre_principale(canvasL,canvasR):
     canvasR[nblignes]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolonnes%2)*(2*rmarqueur+pas),height=hligne,bg=dictcouleurs[-1])
     canvasR[nblignes].pack()
 
+def initiliser_fenetre_principale(canvasL,canvasR):
+    """
+    Fonction qui initialise l'espace de jeu en vidant chacun des Canvas de son contenu et en remplissant par les petits trous
+
+    Parameters
+    ----------
+    canvasL : 
+    canvasL : Liste de Canvas conenant les lignes jouées par le codeur
+    canvasR : Liste de Canvas contenant les lignes jouées par le décodeur
+
+    Returns
+    -------
+    None.
+
+    """
+    #Il reste à retire les variables globales inutiles
+    global pas
+    global nbparties
+    global nblignes
+    global rpion
+    global nbcolonnes
+    global hligne
+    global dictcouleurs
+    global rtrou
+    global rmarqueur
+    global rptrou
+    global root
+    # global espacecommande
+    # global espaceaffichage
+    global espacejeu
+    global espacereponse
+    global matjeu
+    global matreponse
+    
+    # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
+    for i in range(nblignes+1):
+        canvasL[i].delete('all')
+        for j in range(nbcolonnes):
+            cercle(canvasL[i],pas+rpion+j*(pas+2*rpion),hligne/2,rtrou,dictcouleurs[-2])
+        canvasL[i].pack()
+
+    # Lignes résultats
+    for i in range(nblignes):
+        canvasR[i].delete('all')     
+        for j in range(nbcolonnes):
+            cercle(canvasR[i],pas+rmarqueur+j//2*(pas+2*rmarqueur),pas+rmarqueur+j%2*(pas+2*rmarqueur),rptrou,dictcouleurs[-2])
+        canvasR[i].pack()
+    print("matjeu :",matjeu, "\n mat reponse",matreponse)
+    matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
+    matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
+    canvaslignes=[0]*(nblignes+1)
+    canvasreponses=[0]*(nblignes+1)
+    print("matjeu :",matjeu, "\n mat reponse",matreponse)
+    
+
+def creation_fenetre_principale():
+    """
+    Création de la fenêtre principale, avec l'interface graphique Tkinter
+    Les différents espaces sont créés, ainsi que les boutons
+    Parameters
+    ----------
+    ----------
+    Returns None.
+    """
+    global pas
+    global nbparties
+    global listejoueur
+    global decodeur
+    global nblignes
+    global rpion
+    global nbcolonnes
+    global hligne
+    global dictcouleurs
+    global rtrou
+    global rmarqueur
+    global rptrou
+    global nbcouleurs
+    global root
+    global espacecommande
+    global espaceaffichage
+    global espacejeu
+    global espacereponse
+    global canvaslignes
+    global canvasreponses
+    
+    root.title("Mastermind")
+    
+    # Création des Label frame pour séparer l'espace de jeu du panneau de commande
+    
+    espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")
+    espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)
+    espacejeu.pack(side="left",padx=0, pady=10)   
+    espacereponse.pack(side="left",padx=0, pady=10)
+
+    # Espace affichage
+    labelnbparties = tk.Label(espaceaffichage, text="Partie sur "+str(nbparties))
+    labelnbparties.pack(side="top")
+    labeljoueur1=tk.Label(espaceaffichage,text="Codeur :"+listejoueur[int(not decodeur)])
+    labeljoueur1.pack(side="top")
+    labelscore1=tk.Label(espaceaffichage,text="Score :")
+    labelscore1.pack(side="top")
+    labeljoueur2=tk.Label(espaceaffichage,text="Decodeur :"+listejoueur[int(decodeur)])
+    labeljoueur2.pack(side="top")
+    labelscore2=tk.Label(espaceaffichage,text="Score :")
+    labelscore2.pack(side="top")
+
+    jeu_fenetre_principale(canvaslignes, canvasreponses)
+
     # Espace commande
-    buttonquit=tk.Button(espacecommande, text = 'Quitter', command = root.destroy)
+    
+    buttonquit=tk.Button(espacecommande, text = 'Partie suivante', command = lambda : initiliser_fenetre_principale(canvaslignes, canvasreponses))
     buttonquit.pack(side="bottom")
     
     #Initialisation de la liste qui va contenir les boutons de couleurs
@@ -282,6 +385,8 @@ def creation_fenetre_principale(canvasL,canvasR):
     button.pack(side="left")
 
     root.mainloop()
+    
+
 
 # Lancement du programme
-creation_fenetre_principale(canvaslignes,canvasreponses)
+creation_fenetre_principale()
