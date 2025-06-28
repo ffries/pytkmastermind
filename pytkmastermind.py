@@ -66,11 +66,11 @@ def bouton_valider():
         if decodeur:
             if feedback(matjeu, matreponse):
                
-                sv_zoneinfo.set("Victoire !")
+                sv_zoneinfo.set("Gagné ! Victoire du codeur.")
                 
                 # Incrémenter le score
-                score1+=int(decodeur)
-                score2+=int(not(decodeur))
+                score1+=int(numpartie%2)
+                score2+=int((numpartie+1)%2)
                 
                 # Griser le bouton valider pour empêcher de le cliquer
                 bouton_validerligne.config(state="disabled")
@@ -83,11 +83,11 @@ def bouton_valider():
                 bouton_partiesuivante.config(state="normal")
                 
             elif ligne==nblignes-1:
-                sv_zoneinfo.set("Perdu !")
+                sv_zoneinfo.set("Perdu ! Victoire du décodeur")
                 
                 # Incrémenter le score
-                score1+=int(not(decodeur))
-                score2+=int(decodeur)
+                score1+=int((numpartie+1)%2)
+                score2+=int(numpartie%2)
                 
                 # Griser le bouton valider pour empêcher de le cliquer
                 bouton_validerligne.config(state="disabled")
@@ -297,6 +297,8 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     global nbparties
     global numpartie
     global nblignes
+    global ligne
+    global colonne
     global rpion
     global nbcolonnes
     global hligne
@@ -305,6 +307,8 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     global rmarqueur
     global rptrou
     global root
+    global decodeur
+    
     # global espacecommande
     # global espaceaffichage
     global espacejeu
@@ -361,6 +365,11 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     canvaslignes=[0]*(nblignes+1)
     canvasreponses=[0]*(nblignes+1)
     print("matjeu :",matjeu, "\n mat reponse",matreponse)
+    ligne=nblignes
+    colonne=0
+    print("Ligne : ",str(ligne))
+    print("Colonne : ", str(colonne))
+    decodeur=not decodeur
     
 
 def creation_fenetre_principale():
