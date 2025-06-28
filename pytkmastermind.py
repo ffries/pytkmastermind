@@ -12,40 +12,6 @@ Reste à faire :
     - Fait-on un message quand le décodeur valide en code sans mais qu'aucune couleur n'est présente ?
 """
 
-#Bibliotheques
-import tkinter as tk
-
-#variables globales
-nbparties=1 # Doit être modifiable
-nbcouleurs=6 # Doit être modifiable DEFAUT=6 MAX=10
-nblignes=10 # Doit être modifiable DEFAUT=10
-nbcolonnes=4 # Doit être modifiable DEFAUT=4
-pas=4
-rpion=20
-rmarqueur=(2*rpion-pas)/4
-rtrou=rpion/4
-rptrou=rmarqueur/4
-hligne=2*(pas+rpion)
-numpartie=1
-listejoueur=["toto","tata"]
-decodeur=False
-dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
-dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
-colonne=0
-ligne=0
-
-root = tk.Tk()
-espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
-espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
-
-matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
-matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
-canvaslignes=[0]*(nblignes+1)
-canvasreponses=[0]*(nblignes+1)
-
-
 # Fonctions
 def cercle(canva,x,y,r,couleur):
     """
@@ -253,7 +219,7 @@ def jeu_fenetre_principale(canvasL,canvasR):
     canvasR[nblignes]=tk.Canvas(espacereponse,width=pas+(nbcolonnes//2+nbcolonnes%2)*(2*rmarqueur+pas),height=hligne,bg=dictcouleurs[-1])
     canvasR[nblignes].pack()
 
-def initiliser_fenetre_principale(canvasL,canvasR):
+def initialiser_fenetre_principale(canvasL,canvasR):
     """
     Fonction qui initialise l'espace de jeu en vidant chacun des Canvas de son contenu et en remplissant par les petits trous
 
@@ -319,7 +285,10 @@ def creation_fenetre_principale():
     """
     global pas
     global nbparties
+    global partie
     global listejoueur
+    global score1
+    global score2
     global decodeur
     global nblignes
     global rpion
@@ -348,22 +317,36 @@ def creation_fenetre_principale():
     espacereponse.pack(side="left",padx=0, pady=10)
 
     # Espace affichage
-    labelnbparties = tk.Label(espaceaffichage, text="Partie sur "+str(nbparties))
+    sv_nbparties = tk.StringVar()
+    sv_nbparties.set(f"Partie {partie} sur {nbparties}")  # Valeur initiale
+    labelnbparties = tk.Label(espaceaffichage, textvariable=sv_nbparties)
     labelnbparties.pack(side="top")
-    labeljoueur1=tk.Label(espaceaffichage,text="Codeur :"+listejoueur[int(not decodeur)])
-    labeljoueur1.pack(side="top")
-    labelscore1=tk.Label(espaceaffichage,text="Score :")
+    
+    sv_codeur = tk.StringVar()
+    sv_codeur.set("Codeur : "+listejoueur[int(not decodeur)])
+    labelcodeur=tk.Label(espaceaffichage,textvariable=sv_codeur)
+    labelcodeur.pack(side="top")
+
+    sv_decodeur = tk.StringVar()
+    sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])    
+    labeldecodeur=tk.Label(espaceaffichage,textvariable=sv_decodeur)
+    labeldecodeur.pack(side="top")
+    
+    sv_score1 = tk.StringVar()
+    sv_score1.set("Score "+listejoueur[0]+" : "+str(score1))
+    labelscore1=tk.Label(espaceaffichage,textvariable=sv_score1)
     labelscore1.pack(side="top")
-    labeljoueur2=tk.Label(espaceaffichage,text="Decodeur :"+listejoueur[int(decodeur)])
-    labeljoueur2.pack(side="top")
-    labelscore2=tk.Label(espaceaffichage,text="Score :")
+    
+    sv_score2 = tk.StringVar()
+    sv_score2.set("Score "+listejoueur[1]+" : "+str(score2))
+    labelscore2=tk.Label(espaceaffichage,textvariable=sv_score2)
     labelscore2.pack(side="top")
 
     jeu_fenetre_principale(canvaslignes, canvasreponses)
 
     # Espace commande
     
-    buttonquit=tk.Button(espacecommande, text = 'Partie suivante', command = lambda : initiliser_fenetre_principale(canvaslignes, canvasreponses))
+    buttonquit=tk.Button(espacecommande, text = 'Partie suivante', command = lambda : initialiser_fenetre_principale(canvaslignes, canvasreponses))
     buttonquit.pack(side="bottom")
     
     #Initialisation de la liste qui va contenir les boutons de couleurs
@@ -387,6 +370,41 @@ def creation_fenetre_principale():
     root.mainloop()
     
 
+#Bibliotheques
+import tkinter as tk
+
+#variables globales
+nbparties=2 # Doit être modifiable
+partie=1 # Partie en cours
+nbcouleurs=6 # Doit être modifiable DEFAUT=6 MAX=10
+nblignes=10 # Doit être modifiable DEFAUT=10
+nbcolonnes=4 # Doit être modifiable DEFAUT=4
+pas=4
+rpion=20
+rmarqueur=(2*rpion-pas)/4
+rtrou=rpion/4
+rptrou=rmarqueur/4
+hligne=2*(pas+rpion)
+numpartie=1
+listejoueur=["toto","tata"]
+score1=0 # Score du joueur 1 (rang 0 dans listejoueur)
+score2=0 # Score du joueur 2 (rang 1 dans listejoueur)
+decodeur=False
+dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
+dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
+colonne=0
+ligne=0
+
+root = tk.Tk()
+espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
+espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
+
+matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
+matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
+canvaslignes=[0]*(nblignes+1)
+canvasreponses=[0]*(nblignes+1)
 
 # Lancement du programme
 creation_fenetre_principale()
