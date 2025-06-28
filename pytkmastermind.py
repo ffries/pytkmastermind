@@ -62,6 +62,12 @@ def bouton_valider():
     global bouton_partiesuivante
     global boutons_couleur
     
+    # Griser le bouton valider pour empêcher de le cliquer
+    bouton_validerligne.config(state="disabled")
+    
+    # Désactiver le bouton Partie suivante
+    bouton_partiesuivante.config(state="disabled")
+    
     if colonne==nbcolonnes:
         if decodeur:
             if feedback(matjeu, matreponse):
@@ -71,9 +77,6 @@ def bouton_valider():
                 # Incrémenter le score
                 score1+=int(numpartie%2)
                 score2+=int((numpartie+1)%2)
-                
-                # Griser le bouton valider pour empêcher de le cliquer
-                bouton_validerligne.config(state="disabled")
                 
                 # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
                 for i in range(nbcouleurs):
@@ -88,9 +91,6 @@ def bouton_valider():
                 # Incrémenter le score
                 score1+=int((numpartie+1)%2)
                 score2+=int(numpartie%2)
-                
-                # Griser le bouton valider pour empêcher de le cliquer
-                bouton_validerligne.config(state="disabled")
                 
                 # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
                 for i in range(nbcouleurs):
@@ -151,6 +151,13 @@ def choisircouleur(matJ,numerocouleur,canvasL,bouton_validerligne):
             colonne+=1
     else:
         choisircode(matJ,numerocouleur,canvasL,bouton_validerligne)
+        
+    if colonne<nbcolonnes:
+        bouton_validerligne.config(state="disabled")
+    else :
+        bouton_validerligne.config(state="normal")
+    return None
+    
     return None
 
 def choisircode(matJ,numerocouleur,canvasL,bouton_validerligne):
@@ -172,12 +179,20 @@ def choisircode(matJ,numerocouleur,canvasL,bouton_validerligne):
     global pas
     global rpion
     global hligne
+    
+    #global bouton_validerligne
+    
     if colonne<nbcolonnes:
         #print("couleur bouton:",dictcouleurs[numerocouleur])
         cercle(canvasL[nblignes],pas+rpion+colonne*(pas+2*rpion),hligne/2,rpion,dictcouleurs[numerocouleur])
         matJ[nblignes][colonne]=numerocouleur
        # print(matJ,str(matJ))
         colonne+=1
+        
+    if colonne<nbcolonnes:
+        bouton_validerligne.config(state="disabled")
+    else :
+        bouton_validerligne.config(state="normal")
     return None
     # Il reste à gérer le cache
 
@@ -340,8 +355,8 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     sv_codeur.set("Codeur : "+listejoueur[int(not decodeur)])
     sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])
     
-    # On rend le bouton Valider ligne à nouveau cliquable
-    bouton_validerligne.config(state="normal")
+    # On grise le bouton Valider ligne
+    bouton_validerligne.config(state="disabled")
     # On rend les boutons d'ajout de couleur à nouveau cliquables
     for i in range(nbcouleurs):
         boutons_couleur[i].config(state="normal")
@@ -482,6 +497,7 @@ def creation_fenetre_principale():
     # Bouton Valider
     bouton_validerligne = tk.Button(espacecommande,text="Valider ligne", command=bouton_valider)
     bouton_validerligne.pack(side="left")
+    bouton_validerligne.config(state="disabled")
 
     root.mainloop()
     
@@ -490,7 +506,7 @@ def creation_fenetre_principale():
 import tkinter as tk
 
 #variables globales
-nbparties=2 # Doit être modifiable
+nbparties=4 # Doit être modifiable
 numpartie=1 # Partie en cours.
 nbcouleurs=6 # Doit être modifiable DEFAUT=6 MAX=10
 nblignes=10 # Doit être modifiable DEFAUT=10
