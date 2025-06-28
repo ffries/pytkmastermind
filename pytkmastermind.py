@@ -35,6 +35,7 @@ def bouton_valider():
     ----------
     Returns None.
     """
+    global nbcouleurs
     global decodeur
     global ligne
     global nblignes
@@ -59,6 +60,7 @@ def bouton_valider():
     
     global bouton_validerligne
     global bouton_partiesuivante
+    global boutons_couleur
     
     if colonne==nbcolonnes:
         if decodeur:
@@ -72,6 +74,11 @@ def bouton_valider():
                 
                 # Griser le bouton valider pour empêcher de le cliquer
                 bouton_validerligne.config(state="disabled")
+                
+                # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
+                for i in range(nbcouleurs):
+                    boutons_couleur[i].config(state="disabled")
+                    
                 # Activer le bouton Partie suivante
                 bouton_partiesuivante.config(state="normal")
                 
@@ -84,6 +91,11 @@ def bouton_valider():
                 
                 # Griser le bouton valider pour empêcher de le cliquer
                 bouton_validerligne.config(state="disabled")
+                
+                # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
+                for i in range(nbcouleurs):
+                    boutons_couleur[i].config(state="disabled")
+                    
                 # Activer le bouton Partie suivante
                 bouton_partiesuivante.config(state="normal")
             else:
@@ -280,6 +292,7 @@ def initialiser_fenetre_principale(canvasL,canvasR):
 
     """
     #Il reste à retire les variables globales inutiles
+    global nbcouleurs
     global pas
     global nbparties
     global numpartie
@@ -309,6 +322,7 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     
     global bouton_validerligne
     global bouton_partiesuivante
+    global boutons_couleur
     
     # On commence par incrémenter le numéro de partie
     numpartie+=1
@@ -322,9 +336,12 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     sv_codeur.set("Codeur : "+listejoueur[int(not decodeur)])
     sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])
     
-    # On rend le rend à nouveau cliquable
+    # On rend le bouton Valider ligne à nouveau cliquable
     bouton_validerligne.config(state="normal")
-    
+    # On rend les boutons d'ajout de couleur à nouveau cliquables
+    for i in range(nbcouleurs):
+        boutons_couleur[i].config(state="normal")
+
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
         canvasL[i].delete('all')
@@ -389,6 +406,7 @@ def creation_fenetre_principale():
     
     global bouton_validerligne
     global bouton_partiesuivante
+    global boutons_couleur
     
     root.title("Mastermind")
     
