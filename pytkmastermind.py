@@ -365,9 +365,8 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     # On commence par incrémenter le numéro de partie
     numpartie+=1
     
-    # Si la partie est la dernière, on grise le bouton partie suivante
-    if numpartie==nbparties :
-        bouton_partiesuivante.config(state="disabled")
+    # Désactiver le bouton partie suivante
+    bouton_partiesuivante.config(state="disabled")
     
     #Modifier l'affichage
     sv_nbparties.set(f"Partie {numpartie} sur {nbparties}") 
