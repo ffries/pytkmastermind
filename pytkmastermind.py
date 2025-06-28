@@ -61,7 +61,6 @@ def bouton_valider():
                 ligne+=1
                 colonne=0
         else:
-            partie+=1
             # On passe au joueur decodeur
             sv_nbparties.set(f"Partie {partie} sur {nbparties}")
             sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
@@ -257,6 +256,14 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     global espacereponse
     global matjeu
     global matreponse
+   
+    # Toutes les variables tkInter d'affichage dynamique doivent être passées en variables globales
+    global sv_nbparties
+    global sv_codeur
+    global sv_decodeur
+    global sv_score1
+    global sv_score2
+    global sv_zoneinfo
     
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
@@ -311,6 +318,14 @@ def creation_fenetre_principale():
     global espacereponse
     global canvaslignes
     global canvasreponses
+    
+    # Toutes les variables tkInter d'affichage dynamique doivent être passées en variables globales
+    global sv_nbparties
+    global sv_codeur
+    global sv_decodeur
+    global sv_score1
+    global sv_score2
+    global sv_zoneinfo
     
     root.title("Mastermind")
     
