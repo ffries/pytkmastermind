@@ -49,6 +49,7 @@ def bouton_valider():
     global nbparties
     global score1
     global score2
+    global listejoueur
     
     # Toutes les variables tkInter d'affichage dynamique doivent être passées en variables globales
     global sv_nbparties
@@ -81,10 +82,19 @@ def bouton_valider():
                 # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
                 for i in range(nbcouleurs):
                     boutons_couleur[i].config(state="disabled")
-                    
-                # Activer le bouton Partie suivante
-                bouton_partiesuivante.config(state="normal")
                 
+                # Activer le bouton Partie suivante si ce n'est pas la dernière partie
+                if numpartie < nbparties :
+                    bouton_partiesuivante.config(state="normal")
+                else :
+                    # Si c'est la dernière partie, on affiche le résultat final
+                    if score1>score2 :
+                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
+                    elif score2<score1 :
+                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
+                    else :
+                        sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
+                        
             elif ligne==nblignes-1:
                 sv_zoneinfo.set("Perdu ! Victoire du décodeur")
                 
@@ -96,8 +106,17 @@ def bouton_valider():
                 for i in range(nbcouleurs):
                     boutons_couleur[i].config(state="disabled")
                     
-                # Activer le bouton Partie suivante
-                bouton_partiesuivante.config(state="normal")
+                # Activer le bouton Partie suivante si ce n'est pas la dernière partie
+                if numpartie < nbparties :
+                    bouton_partiesuivante.config(state="normal")
+                else :
+                    # Si c'est la dernière partie, on affiche le résultat final
+                    if score1>score2 :
+                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
+                    elif score2<score1 :
+                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
+                    else :
+                        sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
             else:
                 sv_zoneinfo.set(f"Ligne {ligne+1} validée. Sélectionnez la ligne {ligne+2} !")
                 # On incrémente la ligne et on remet la colonne à zéro
