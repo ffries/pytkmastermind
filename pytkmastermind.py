@@ -57,20 +57,35 @@ def bouton_valider():
     global sv_score2
     global sv_zoneinfo
     
+    global bouton_validerligne
+    global bouton_partiesuivante
+    
     if colonne==nbcolonnes:
         if decodeur:
             if feedback(matjeu, matreponse):
                
                 sv_zoneinfo.set("Victoire !")
                 
+                # Incrémenter le score
                 score1+=int(decodeur)
                 score2+=int(not(decodeur))
+                
+                # Griser le bouton valider pour empêcher de le cliquer
+                bouton_validerligne.config(state="disabled")
+                # Activer le bouton Partie suivante
+                bouton_partiesuivante.config(state="normal")
                 
             elif ligne==nblignes-1:
                 sv_zoneinfo.set("Perdu !")
                 
+                # Incrémenter le score
                 score1+=int(not(decodeur))
                 score2+=int(decodeur)
+                
+                # Griser le bouton valider pour empêcher de le cliquer
+                bouton_validerligne.config(state="disabled")
+                # Activer le bouton Partie suivante
+                bouton_partiesuivante.config(state="normal")
             else:
                 sv_zoneinfo.set(f"Ligne {ligne+1} validée. Sélectionnez la ligne {ligne+2} !")
                 # On incrémente la ligne et on remet la colonne à zéro
@@ -95,7 +110,7 @@ def bouton_valider():
             
     return None
 
-def choisircouleur(matJ,numerocouleur,canvasL,button):
+def choisircouleur(matJ,numerocouleur,canvasL,bouton_validerligne):
     """
     Fonction qui permet d'afficher un pion de la couleur choisie'
     Parameters
@@ -103,7 +118,7 @@ def choisircouleur(matJ,numerocouleur,canvasL,button):
     matJ : int[nblignes+1][nbcolonnes]
     numerocouleur : int
     canvasL : le canvas permettant d'afficher les pions dans la partie coder ou décoder
-    button : le bouton Valider
+    bouton_validerligne : le bouton Valider
     ----------
     Returns None.
     """
@@ -123,10 +138,10 @@ def choisircouleur(matJ,numerocouleur,canvasL,button):
             #print(matJ,str(matJ))
             colonne+=1
     else:
-        choisircode(matJ,numerocouleur,canvasL,button)
+        choisircode(matJ,numerocouleur,canvasL,bouton_validerligne)
     return None
 
-def choisircode(matJ,numerocouleur,canvasL,button):
+def choisircode(matJ,numerocouleur,canvasL,bouton_validerligne):
     """
     Fonction qui permet au coder de rentrer son code, et qui affiche le code
     Parameters
@@ -292,13 +307,23 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     global sv_score2
     global sv_zoneinfo
     
+    global bouton_validerligne
+    global bouton_partiesuivante
+    
     # On commence par incrémenter le numéro de partie
     numpartie+=1
+    
+    # Si la partie est la dernière, on grise le bouton partie suivante
+    if numpartie==nbparties :
+        bouton_partiesuivante.config(state="disabled")
     
     #Modifier l'affichage
     sv_nbparties.set(f"Partie {numpartie} sur {nbparties}") 
     sv_codeur.set("Codeur : "+listejoueur[int(not decodeur)])
     sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])
+    
+    # On rend le rend à nouveau cliquable
+    bouton_validerligne.config(state="normal")
     
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
@@ -362,6 +387,9 @@ def creation_fenetre_principale():
     global sv_score2
     global sv_zoneinfo
     
+    global bouton_validerligne
+    global bouton_partiesuivante
+    
     root.title("Mastermind")
     
     # Création des Label frame pour séparer l'espace de jeu du panneau de commande
@@ -406,8 +434,9 @@ def creation_fenetre_principale():
 
     # Espace commande
     
-    buttonquit=tk.Button(espacecommande, text = 'Partie suivante', command = lambda : initialiser_fenetre_principale(canvaslignes, canvasreponses))
-    buttonquit.pack(side="bottom")
+    bouton_partiesuivante=tk.Button(espacecommande, text = 'Partie suivante', command = lambda : initialiser_fenetre_principale(canvaslignes, canvasreponses))
+    bouton_partiesuivante.pack(side="bottom")
+    bouton_partiesuivante.config(state="disabled")
     
     #Initialisation de la liste qui va contenir les boutons de couleurs
     boutons_couleur=[0]*nbcouleurs 
@@ -420,12 +449,12 @@ def creation_fenetre_principale():
     #Parcours de la liste de couleurs pour créer les boutons de couleurs sauf la couleur d'initialisation
     for i in range(nbcouleurs):
         #print("dictionnaire de couleurs",dictcouleurs[i], "i=", i)
-        boutons_couleur[i]=tk.Button(espacecommande,text=dictcouleurs[i],command=lambda ifixe=i:choisircouleur(matjeu,ifixe,canvaslignes,button))
+        boutons_couleur[i]=tk.Button(espacecommande,text=dictcouleurs[i],command=lambda ifixe=i:choisircouleur(matjeu,ifixe,canvaslignes,bouton_validerligne))
         boutons_couleur[i].pack(side="left", fill="x", expand=1)
 
     # Bouton Valider
-    button = tk.Button(espacecommande,text="Valider", command=bouton_valider)
-    button.pack(side="left")
+    bouton_validerligne = tk.Button(espacecommande,text="Valider ligne", command=bouton_valider)
+    bouton_validerligne.pack(side="left")
 
     root.mainloop()
     
