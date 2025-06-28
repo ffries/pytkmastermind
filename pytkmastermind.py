@@ -44,8 +44,16 @@ def bouton_valider():
     global canvasreponses
     global matjeu
     global matreponse
-    global partie
+    global numpartie
     global nbparties
+    
+    # Toutes les variables tkInter d'affichage dynamique doivent être passées en variables globales
+    global sv_nbparties
+    global sv_codeur
+    global sv_decodeur
+    global sv_score1
+    global sv_score2
+    global sv_zoneinfo
     
     if colonne==nbcolonnes:
         if decodeur:
@@ -62,7 +70,7 @@ def bouton_valider():
                 colonne=0
         else:
             # On passe au joueur decodeur
-            sv_nbparties.set(f"Partie {partie} sur {nbparties}")
+            sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")
             sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
             #Vidage du canvas de codage
             canvaslignes[nblignes].delete('all')
@@ -187,7 +195,7 @@ def jeu_fenetre_principale(canvasL,canvasR):
     None.
 
     """
-    #Il reste à retire les variables globales inutiles
+    #Il reste à retirer les variables globales inutiles
     global pas
     global nbparties
     global listejoueur
@@ -297,7 +305,7 @@ def creation_fenetre_principale():
     """
     global pas
     global nbparties
-    global partie
+    global numpartie
     global listejoueur
     global score1
     global score2
@@ -338,7 +346,7 @@ def creation_fenetre_principale():
 
     # Espace affichage
     sv_nbparties = tk.StringVar()
-    sv_nbparties.set(f"Partie {partie} sur {nbparties}")  # Valeur initiale
+    sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")  # Valeur initiale
     labelnbparties = tk.Label(espaceaffichage, textvariable=sv_nbparties)
     labelnbparties.pack(side="top")
     
@@ -400,7 +408,7 @@ import tkinter as tk
 
 #variables globales
 nbparties=2 # Doit être modifiable
-partie=1 # Partie en cours
+numpartie=1 # Partie en cours
 nbcouleurs=6 # Doit être modifiable DEFAUT=6 MAX=10
 nblignes=10 # Doit être modifiable DEFAUT=10
 nbcolonnes=4 # Doit être modifiable DEFAUT=4
@@ -410,7 +418,6 @@ rmarqueur=(2*rpion-pas)/4
 rtrou=rpion/4
 rptrou=rmarqueur/4
 hligne=2*(pas+rpion)
-numpartie=1
 listejoueur=["toto","tata"]
 score1=0 # Score du joueur 1 (rang 0 dans listejoueur)
 score2=0 # Score du joueur 2 (rang 1 dans listejoueur)
