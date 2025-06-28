@@ -90,7 +90,7 @@ def bouton_valider():
                     # Si c'est la dernière partie, on affiche le résultat final
                     if score1>score2 :
                         sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
-                    elif score2<score1 :
+                    elif score1<score2 :
                         sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
                     else :
                         sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
@@ -113,7 +113,7 @@ def bouton_valider():
                     # Si c'est la dernière partie, on affiche le résultat final
                     if score1>score2 :
                         sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
-                    elif score2<score1 :
+                    elif score1<score2 :
                         sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
                     else :
                         sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
