@@ -63,7 +63,7 @@ def bouton_valider():
     global bouton_partiesuivante
     global boutons_couleur
     
-    # Griser le bouton valider pour empêcher de le cliquer
+    # Désactiver le bouton valider pour empêcher de le cliquer
     bouton_validerligne.config(state="disabled")
     
     # Désactiver le bouton Partie suivante
@@ -73,13 +73,13 @@ def bouton_valider():
         if decodeur:
             if feedback(matjeu, matreponse):
                
-                sv_zoneinfo.set("Gagné ! Victoire du codeur.")
+                sv_zoneinfo.set(f"Combinaison secrète découverte ! Partie {numpartie} gagnée par le décodeur.")
                 
                 # Incrémenter le score
                 score1+=int(numpartie%2)
                 score2+=int((numpartie+1)%2)
                 
-                # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
+                # Désactiver les boutons d'ajout de couleur pour empêcher de les cliquer
                 for i in range(nbcouleurs):
                     boutons_couleur[i].config(state="disabled")
                 
@@ -96,13 +96,13 @@ def bouton_valider():
                         sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
                         
             elif ligne==nblignes-1:
-                sv_zoneinfo.set("Perdu ! Victoire du décodeur")
+                sv_zoneinfo.set(f"Combinaison secrète non découverte ! Partie {numpartie} gagnée par le codeur.")
                 
                 # Incrémenter le score
                 score1+=int((numpartie+1)%2)
                 score2+=int(numpartie%2)
                 
-                # Griser les boutons d'ajout de couleur pour empêcher de les cliquer
+                # Désactiver les boutons d'ajout de couleur pour empêcher de les cliquer
                 for i in range(nbcouleurs):
                     boutons_couleur[i].config(state="disabled")
                     
@@ -398,10 +398,12 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     canvaslignes=[0]*(nblignes+1)
     canvasreponses=[0]*(nblignes+1)
     print("matjeu :",matjeu, "\n mat reponse",matreponse)
+    
+    # On se place à la dernière ligne qui correspond au code secret
     ligne=nblignes
     colonne=0
-    print("Ligne : ",str(ligne))
-    print("Colonne : ", str(colonne))
+    
+    # Interversion codeur et décodeur
     decodeur=not decodeur
     
 
