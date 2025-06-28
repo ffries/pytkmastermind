@@ -46,6 +46,8 @@ def bouton_valider():
     global matreponse
     global numpartie
     global nbparties
+    global score1
+    global score2
     
     # Toutes les variables tkInter d'affichage dynamique doivent être passées en variables globales
     global sv_nbparties
@@ -60,15 +62,25 @@ def bouton_valider():
             if feedback(matjeu, matreponse):
                
                 sv_zoneinfo.set("Victoire !")
-                # Il reste à tout remettre à zéro pour recommencer une nouvelle partie
+                
+                score1+=int(decodeur)
+                score2+=int(not(decodeur))
                 
             elif ligne==nblignes-1:
                 sv_zoneinfo.set("Perdu !")
+                
+                score1+=int(not(decodeur))
+                score2+=int(decodeur)
             else:
                 sv_zoneinfo.set(f"Ligne {ligne+1} validée. Sélectionnez la ligne {ligne+2} !")
                 # On incrémente la ligne et on remet la colonne à zéro
                 ligne+=1
                 colonne=0
+                
+            # Affichage du score
+            sv_score1.set("Score "+listejoueur[0]+" : "+str(score1))
+            sv_score2.set("Score "+listejoueur[1]+" : "+str(score2))
+            
         else:
             # On passe au joueur decodeur
             sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
@@ -80,6 +92,7 @@ def bouton_valider():
             
             #Intervertir codeur et décodeur
             decodeur=not decodeur
+            
     return None
 
 def choisircouleur(matJ,numerocouleur,canvasL,button):
