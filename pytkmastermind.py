@@ -44,22 +44,27 @@ def bouton_valider():
     global canvasreponses
     global matjeu
     global matreponse
+    global partie
+    global nbparties
+    
     if colonne==nbcolonnes:
         if decodeur:
             if feedback(matjeu, matreponse):
                
-                print("Victoire !")
+                sv_zoneinfo.set("Victoire !")
                 # Il reste à tout remettre à zéro pour recommencer une nouvelle partie
             elif ligne==nblignes-1:
-                print("Perdu !")
+                sv_zoneinfo.set("Perdu !")
             else:
-                print("Ligne",ligne,"validée. Il faut continuer !")
+                sv_zoneinfo.set(f"Ligne {ligne} validée. Il faut continuer !")
                 # On incrémente la ligne et on remet la colonne à zéro
                 ligne+=1
                 colonne=0
         else:
+            partie+=1
             # On passe au joueur decodeur
-            print("Code secret validé. On passe au joueur décodeur !")
+            sv_nbparties.set(f"Partie {partie} sur {nbparties}")
+            sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
             #Vidage du canvas de codage
             canvaslignes[nblignes].delete('all')
             ligne=0
@@ -341,7 +346,12 @@ def creation_fenetre_principale():
     sv_score2.set("Score "+listejoueur[1]+" : "+str(score2))
     labelscore2=tk.Label(espaceaffichage,textvariable=sv_score2)
     labelscore2.pack(side="top")
-
+    
+    sv_zoneinfo = tk.StringVar()
+    sv_zoneinfo.set("")
+    labelzoneinfo=tk.Label(espaceaffichage,textvariable=sv_zoneinfo)
+    labelzoneinfo.pack(side="top")
+    
     jeu_fenetre_principale(canvaslignes, canvasreponses)
 
     # Espace commande
