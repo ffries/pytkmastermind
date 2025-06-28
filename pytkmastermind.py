@@ -405,6 +405,7 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     
     # Interversion codeur et décodeur
     decodeur=not decodeur
+    sv_zoneinfo.set("Le codeur doit saisir une combinaison secrète")
     
 
 def creation_fenetre_principale():
@@ -488,7 +489,7 @@ def creation_fenetre_principale():
     labelscore2.pack(side="top")
     
     sv_zoneinfo = tk.StringVar()
-    sv_zoneinfo.set("")
+    sv_zoneinfo.set("Le codeur doit saisir une combinaison secrète")
     labelzoneinfo=tk.Label(espaceaffichage,textvariable=sv_zoneinfo)
     labelzoneinfo.pack(side="top")
     
