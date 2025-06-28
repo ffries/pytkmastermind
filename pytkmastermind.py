@@ -61,21 +61,24 @@ def bouton_valider():
                
                 sv_zoneinfo.set("Victoire !")
                 # Il reste à tout remettre à zéro pour recommencer une nouvelle partie
+                
             elif ligne==nblignes-1:
                 sv_zoneinfo.set("Perdu !")
             else:
-                sv_zoneinfo.set(f"Ligne {ligne} validée. Il faut continuer !")
+                sv_zoneinfo.set(f"Ligne {ligne+1} validée. Sélectionnez la ligne {ligne+2} !")
                 # On incrémente la ligne et on remet la colonne à zéro
                 ligne+=1
                 colonne=0
         else:
             # On passe au joueur decodeur
-            sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")
             sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
+            
             #Vidage du canvas de codage
             canvaslignes[nblignes].delete('all')
             ligne=0
             colonne=0
+            
+            #Intervertir codeur et décodeur
             decodeur=not decodeur
     return None
 
@@ -198,6 +201,7 @@ def jeu_fenetre_principale(canvasL,canvasR):
     #Il reste à retirer les variables globales inutiles
     global pas
     global nbparties
+    global numpartie
     global listejoueur
     global decodeur
     global nblignes
@@ -214,6 +218,7 @@ def jeu_fenetre_principale(canvasL,canvasR):
     # global espaceaffichage
     global espacejeu
     global espacereponse
+    
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
         canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])
@@ -249,6 +254,7 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     #Il reste à retire les variables globales inutiles
     global pas
     global nbparties
+    global numpartie
     global nblignes
     global rpion
     global nbcolonnes
@@ -272,6 +278,14 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     global sv_score1
     global sv_score2
     global sv_zoneinfo
+    
+    # On commence par incrémenter le numéro de partie
+    numpartie+=1
+    
+    #Modifier l'affichage
+    sv_nbparties.set(f"Partie {numpartie} sur {nbparties}") 
+    sv_codeur.set("Codeur : "+listejoueur[int(not decodeur)])
+    sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])
     
     # Lignes complétées par le décodeur, plus la ligne complétée par le codeur
     for i in range(nblignes+1):
@@ -356,7 +370,7 @@ def creation_fenetre_principale():
     labelcodeur.pack(side="top")
 
     sv_decodeur = tk.StringVar()
-    sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])    
+    sv_decodeur.set("Décodeur : "+listejoueur[int(decodeur)])
     labeldecodeur=tk.Label(espaceaffichage,textvariable=sv_decodeur)
     labeldecodeur.pack(side="top")
     
@@ -408,7 +422,7 @@ import tkinter as tk
 
 #variables globales
 nbparties=2 # Doit être modifiable
-numpartie=1 # Partie en cours
+numpartie=1 # Partie en cours.
 nbcouleurs=6 # Doit être modifiable DEFAUT=6 MAX=10
 nblignes=10 # Doit être modifiable DEFAUT=10
 nbcolonnes=4 # Doit être modifiable DEFAUT=4
