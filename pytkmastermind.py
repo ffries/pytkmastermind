@@ -520,11 +520,90 @@ def creation_fenetre_principale():
     bouton_validerligne.pack(side="left")
     bouton_validerligne.config(state="disabled")
 
-    root.mainloop()
     
+# Fonctions
+def lancer_application():
+    # Lance la fenêtre de paramètres
+    fenetre_parametres()
+    root.mainloop()
+
+
+def valider_parametres():
+    """ Fonction qui valide les parametres du jeu
+    """
+    global nbcolonnes, nbcouleurs, nbparties, listejoueur
+    global NBpions, NBcouleurs, NBparties, Enom1, Enom2
+    
+    # Récupérer les paramètres des widgets
+    nbcolonnes = int(NBpions.get())  # Nombre de pions sélectionnés
+    nbcouleurs = int(NBcouleurs.get())  # Nombre de couleurs sélectionnées
+    nbparties = int(NBparties.get())  # Nombre de parties sélectionnées
+    listejoueur = [Enom1.get(), Enom2.get()]  # Noms de joueurs
+
+    startwindow.destroy()  # Ferme la fenêtre Toplevel
+    root.deiconify()       # Réaffiche la fenêtre principale
+    creation_fenetre_principale()
+
+def fenetre_parametres():
+    # Lancer la fenêtre de démarrage
+    #startwindow.mainloop()  # La boucle principale de la fenêtre startwindow
+    # Création de la fenêtre de démarrage
+    global NBpions, NBcouleurs, NBparties, Enom1, Enom2, startwindow
+
+    startwindow = tk.Toplevel(root)
+    startwindow.title("Paramètres du jeu Mastermind")
+    startwindow.geometry("450x400")
+
+    # Données initiales
+    choixpions = [2, 4, 6]
+    choixcolor = [2, 4, 6, 8]
+    choixparties = [2, 4, 6]
+
+    # Marges
+    PAD_X = 15 # valeur espacement horizontal 15 pixels à gauche et à droite
+    PAD_Y = 10 # valeur espacement vertical 10 pixels en haut et en bas
+
+    # Largeur uniforme pour les champs
+    COMBO_WIDTH = 20  # largeur menu deroulant
+    ENTRY_WIDTH = 23  # largeur saisie du nom
+
+    # Ligne 1 - Nombre de pions
+    tk.Label(startwindow, text="Nombre de pions :").grid(row=0, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    NBpions = ttk.Combobox(startwindow, values=choixpions, width=COMBO_WIDTH)
+    NBpions.current(0)  # valeur par défaut
+    NBpions.grid(row=0, column=1, padx=PAD_X, pady=PAD_Y)
+
+    # Ligne 2 - Nombre de couleurs
+    tk.Label(startwindow, text="Nombre de couleurs :").grid(row=1, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    NBcouleurs = ttk.Combobox(startwindow, values=choixcolor, width=COMBO_WIDTH)
+    NBcouleurs.current(0)  # valeur par défaut
+    NBcouleurs.grid(row=1, column=1, padx=PAD_X, pady=PAD_Y)
+
+    # Ligne 3 - Nombre de parties
+    tk.Label(startwindow, text="Nombre de parties :").grid(row=2, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    NBparties = ttk.Combobox(startwindow, values=choixparties, width=COMBO_WIDTH)
+    NBparties.current(0)  # valeur par défaut
+    NBparties.grid(row=2, column=1, padx=PAD_X, pady=PAD_Y)
+
+    # Ligne 4 - Nom du joueur qui code
+    tk.Label(startwindow, text="Nom du joueur qui code :").grid(row=3, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    Enom1 = tk.Entry(startwindow, width=ENTRY_WIDTH)
+    Enom1.grid(row=3, column=1, padx=PAD_X, pady=PAD_Y)
+
+    # Ligne 5 - Nom du joueur qui devine
+    tk.Label(startwindow, text="Nom du joueur qui devine :").grid(row=4, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    Enom2 = tk.Entry(startwindow, width=ENTRY_WIDTH)
+    Enom2.grid(row=4, column=1, padx=PAD_X, pady=PAD_Y)
+
+    # Ligne 6 - Bouton validation des choix
+    Bvalid = tk.Button(startwindow, text="VALIDER", width=20, command=valider_parametres)
+    Bvalid.grid(row=5, column=0, columnspan=2, pady=30)
+    
+    root.mainloop()
 
 #Bibliotheques
 import tkinter as tk
+from tkinter import ttk
 
 #variables globales
 nbparties=4 # Doit être modifiable
@@ -539,8 +618,8 @@ rtrou=rpion/4
 rptrou=rmarqueur/4
 hligne=2*(pas+rpion)
 listejoueur=["toto","tata"]
-score1=0 # Score du joueur 1 (rang 0 dans listejoueur)
-score2=0 # Score du joueur 2 (rang 1 dans listejoueur)
+score1=0 # Score du joueur 1
+score2=0 # Score du joueur 2
 decodeur=False
 dictcouleurs={-1:"light gray",-2:"gray64",0:"red",1:"green",2:"blue",3:"yellow",4:"orange",5:"cyan",6:"purple",7:"magenta",8:"black",9:"white"}
 dictcouleursreponse={-2:"gray64",0:"black",1:"white"}
@@ -548,6 +627,8 @@ colonne=0
 ligne=0
 
 root = tk.Tk()
+root.withdraw() # Cache la fenêtre principale pour l'instant
+
 espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
 espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
@@ -559,4 +640,7 @@ canvaslignes=[0]*(nblignes+1)
 canvasreponses=[0]*(nblignes+1)
 
 # Lancement du programme
-creation_fenetre_principale()
+lancer_application()
+
+
+    
