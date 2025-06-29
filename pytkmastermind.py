@@ -525,7 +525,7 @@ def creation_fenetre_principale():
 def lancer_application():
     # Lance la fenêtre de paramètres
     fenetre_parametres()
-    root.mainloop()
+    #root.mainloop()
 
 
 def valider_parametres():
@@ -560,6 +560,7 @@ def fenetre_parametres():
     startwindow = tk.Toplevel(root)
     startwindow.title("Paramètres du jeu Mastermind")
     startwindow.geometry("450x400")
+    startwindow.protocol("WM_DELETE_WINDOW", quitter_application)
 
     # Données initiales
     choixpions = [2, 4, 6]
@@ -594,14 +595,14 @@ def fenetre_parametres():
 
     # Ligne 4 - Nom du joueur 1
     Enom1_var = tk.StringVar()
-    Enom1_var.set("Nom1")  # Valeur par défaut
+    Enom1_var.set("Nom 1")  # Valeur par défaut
     tk.Label(startwindow, text="Joueur 1 :").grid(row=3, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
     Enom1 = tk.Entry(startwindow, textvariable=Enom1_var, width=ENTRY_WIDTH)
     Enom1.grid(row=3, column=1, padx=PAD_X, pady=PAD_Y)
 
     # Ligne 5 - Nom du joueur 2
     Enom2_var = tk.StringVar()
-    Enom2_var.set("Nom2")  # Valeur par défaut
+    Enom2_var.set("Nom 2")  # Valeur par défaut
     tk.Label(startwindow, text="Joueur 2 :").grid(row=4, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
     Enom1 = tk.Entry(startwindow, textvariable=Enom2_var, width=ENTRY_WIDTH)
     Enom1.grid(row=4, column=1, padx=PAD_X, pady=PAD_Y)
@@ -611,6 +612,10 @@ def fenetre_parametres():
     Bvalid.grid(row=5, column=0, columnspan=2, pady=30)
     
     root.mainloop()
+
+def quitter_application():
+    root.destroy()  # Détruit root et toutes ses fenêtres associées
+
 
 #Bibliotheques
 import tkinter as tk
@@ -652,6 +657,3 @@ espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 
 # Lancement du programme
 lancer_application()
-
-
-    
