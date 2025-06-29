@@ -577,13 +577,13 @@ def fenetre_parametres():
     # Ligne 1 - Nombre de pions
     tk.Label(startwindow, text="Nombre de pions :").grid(row=0, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
     NBpions = ttk.Combobox(startwindow, values=choixpions, width=COMBO_WIDTH)
-    NBpions.current(0)  # valeur par défaut
+    NBpions.current(1)  # valeur par défaut
     NBpions.grid(row=0, column=1, padx=PAD_X, pady=PAD_Y)
 
     # Ligne 2 - Nombre de couleurs
     tk.Label(startwindow, text="Nombre de couleurs :").grid(row=1, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
     NBcouleurs = ttk.Combobox(startwindow, values=choixcolor, width=COMBO_WIDTH)
-    NBcouleurs.current(0)  # valeur par défaut
+    NBcouleurs.current(2)  # valeur par défaut
     NBcouleurs.grid(row=1, column=1, padx=PAD_X, pady=PAD_Y)
 
     # Ligne 3 - Nombre de parties
