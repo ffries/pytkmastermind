@@ -532,14 +532,14 @@ def valider_parametres():
     """ Fonction qui valide les parametres du jeu
     """
     global nbcolonnes, nbcouleurs, nbparties, listejoueur
-    global NBpions, NBcouleurs, NBparties, Enom1, Enom2
+    global NBpions, NBcouleurs, NBparties, Enom1_var, Enom2_var
     global matjeu, matreponse, canvaslignes, canvasreponses
     
     # Récupérer les paramètres des widgets
     nbcolonnes = int(NBpions.get())  # Nombre de pions sélectionnés
     nbcouleurs = int(NBcouleurs.get())  # Nombre de couleurs sélectionnées
     nbparties = int(NBparties.get())  # Nombre de parties sélectionnées
-    listejoueur = [Enom1.get(), Enom2.get()]  # Noms de joueurs
+    listejoueur = [Enom1_var.get(), Enom2_var.get()]  # Noms de joueurs
     
     # Codage des matrices de jeu et de réponse
     matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
@@ -555,7 +555,7 @@ def fenetre_parametres():
     # Lancer la fenêtre de démarrage
     #startwindow.mainloop()  # La boucle principale de la fenêtre startwindow
     # Création de la fenêtre de démarrage
-    global NBpions, NBcouleurs, NBparties, Enom1, Enom2, startwindow
+    global NBpions, NBcouleurs, NBparties, Enom1, Enom2, Enom1_var, Enom2_var, startwindow
 
     startwindow = tk.Toplevel(root)
     startwindow.title("Paramètres du jeu Mastermind")
@@ -592,15 +592,19 @@ def fenetre_parametres():
     NBparties.current(0)  # valeur par défaut
     NBparties.grid(row=2, column=1, padx=PAD_X, pady=PAD_Y)
 
-    # Ligne 4 - Nom du joueur qui code
-    tk.Label(startwindow, text="Nom du joueur qui code :").grid(row=3, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
-    Enom1 = tk.Entry(startwindow, width=ENTRY_WIDTH)
+    # Ligne 4 - Nom du joueur 1
+    Enom1_var = tk.StringVar()
+    Enom1_var.set("Nom1")  # Valeur par défaut
+    tk.Label(startwindow, text="Joueur 1 :").grid(row=3, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    Enom1 = tk.Entry(startwindow, textvariable=Enom1_var, width=ENTRY_WIDTH)
     Enom1.grid(row=3, column=1, padx=PAD_X, pady=PAD_Y)
 
-    # Ligne 5 - Nom du joueur qui devine
-    tk.Label(startwindow, text="Nom du joueur qui devine :").grid(row=4, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
-    Enom2 = tk.Entry(startwindow, width=ENTRY_WIDTH)
-    Enom2.grid(row=4, column=1, padx=PAD_X, pady=PAD_Y)
+    # Ligne 5 - Nom du joueur 2
+    Enom2_var = tk.StringVar()
+    Enom2_var.set("Nom2")  # Valeur par défaut
+    tk.Label(startwindow, text="Joueur 2 :").grid(row=4, column=0, sticky="e", padx=PAD_X, pady=PAD_Y)
+    Enom1 = tk.Entry(startwindow, textvariable=Enom2_var, width=ENTRY_WIDTH)
+    Enom1.grid(row=4, column=1, padx=PAD_X, pady=PAD_Y)
 
     # Ligne 6 - Bouton validation des choix
     Bvalid = tk.Button(startwindow, text="VALIDER", width=20, command=valider_parametres)
