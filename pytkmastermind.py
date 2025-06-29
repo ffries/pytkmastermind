@@ -533,12 +533,19 @@ def valider_parametres():
     """
     global nbcolonnes, nbcouleurs, nbparties, listejoueur
     global NBpions, NBcouleurs, NBparties, Enom1, Enom2
+    global matjeu, matreponse, canvaslignes, canvasreponses
     
     # Récupérer les paramètres des widgets
     nbcolonnes = int(NBpions.get())  # Nombre de pions sélectionnés
     nbcouleurs = int(NBcouleurs.get())  # Nombre de couleurs sélectionnées
     nbparties = int(NBparties.get())  # Nombre de parties sélectionnées
     listejoueur = [Enom1.get(), Enom2.get()]  # Noms de joueurs
+    
+    # Codage des matrices de jeu et de réponse
+    matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
+    matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
+    canvaslignes=[0]*(nblignes+1)
+    canvasreponses=[0]*(nblignes+1)
 
     startwindow.destroy()  # Ferme la fenêtre Toplevel
     root.deiconify()       # Réaffiche la fenêtre principale
@@ -634,10 +641,10 @@ espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 espacejeu=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 espacereponse=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)
 
-matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
-matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
-canvaslignes=[0]*(nblignes+1)
-canvasreponses=[0]*(nblignes+1)
+#matjeu=[[-1]*nbcolonnes for i in range(nblignes+1)]
+#matreponse=[[-1]*nbcolonnes for i in range(nblignes)]
+#canvaslignes=[0]*(nblignes+1)
+#canvasreponses=[0]*(nblignes+1)
 
 # Lancement du programme
 lancer_application()
