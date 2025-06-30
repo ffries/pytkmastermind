@@ -20,15 +20,14 @@ header {
 /*Gestion du pied de page et de ce qu'il contient */
 footer{
   display: grid;
-  height : 7%;
+  height : 70px;
   grid-template-columns: 30% 30% 30%;
   align-items: start;
   justify-content: space-between;
   background-color: #333;
   color: white;
   padding: 5px;
-  position:absolute;
-  bottom:0;
+  position: absolute;
   left:0;
   right:0;  
 }
