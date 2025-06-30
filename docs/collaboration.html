@@ -122,8 +122,18 @@ total 16K
 git push -u origin main</pre>
 					  
 					  <p>
-					    Quand on travaille à plusieurs, il faudra parfois résoudre les conflits entre les différentes versions du code.
+					    Quand on travaille à plusieurs, il faudra parfois résoudre les conflits entre les différentes versions du code. Nous avons utilisé l'un des deux outils disponibles pour faire des diff visuels : <a href="https://meldmerge.org/">Meld</a> (MacOS et Linux) et <a href="https://kdiff3.sourceforge.net/">Kdiff3</a> (Windows, MacOS et Linux). Tout d'abord il faut indiquer à Git l'outil de réconciliation choisi. Dans cet exemple, on choisit <a href="https://meldmerge.org/">Meld</a> :
 					  </p>
+					  
+<pre class="command-line">git config --global merge.tool meld
+git config --global mergetool.prompt false
+git config --global mergetool.keepBackup false</pre>
+
+            <p>Ensuite, en cas de conflit, on lance la commande :</p>
+<pre class="command-line">git mergetool</pre>
+
+            <p>Cela ouvre l'outil de réconciliation avec les 3 versions : la version locale, la version distante du git et l'ancêtre commun.</p>
+            
          	</article>
         </section>    
         
