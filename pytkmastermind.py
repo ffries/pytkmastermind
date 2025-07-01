@@ -458,7 +458,7 @@ def creation_fenetre_principale():
     # Création des Label frame pour séparer l'espace de jeu du panneau de commande
     
     espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")
-    espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)
+    espaceaffichage.pack(side="left",padx=0, pady=10, fill="both", expand=True)
     espacejeu.pack(side="left",padx=0, pady=10)   
     espacereponse.pack(side="left",padx=0, pady=10)
 
