@@ -559,7 +559,8 @@ def fenetre_parametres():
 
     startwindow = tk.Toplevel(root)
     startwindow.title("Paramètres du jeu Mastermind")
-    startwindow.geometry("450x400")
+    startwindow.geometry("700x400")
+    startwindow.resizable(False, False)  # Empêche le redimensionnement
     startwindow.protocol("WM_DELETE_WINDOW", quitter_application)
 
     # Données initiales
