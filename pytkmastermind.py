@@ -73,7 +73,7 @@ def bouton_valider():
         if decodeur:
             if feedback(matjeu, matreponse):
                
-                sv_zoneinfo.set(f"Combinaison secrète découverte ! Partie {numpartie} gagnée par le décodeur.")
+                sv_zoneinfo.set(f"Combinaison secrète découverte !\nPartie {numpartie} gagnée par le décodeur.")
                 
                 # Incrémenter le score
                 score1+=int(numpartie%2)
@@ -89,14 +89,14 @@ def bouton_valider():
                 else :
                     # Si c'est la dernière partie, on affiche le résultat final
                     if score1>score2 :
-                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
+                        sv_zoneinfo.set(f"Partie terminée.\nVictoire finale de {listejoueur[0]}")
                     elif score1<score2 :
-                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
+                        sv_zoneinfo.set(f"Partie terminée.\nVictoire finale de {listejoueur[1]}")
                     else :
-                        sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
+                        sv_zoneinfo.set(f"Partie terminée.\nEgalité entre les deux joueurs")
                         
             elif ligne==nblignes-1:
-                sv_zoneinfo.set(f"Combinaison secrète non découverte ! Partie {numpartie} gagnée par le codeur.")
+                sv_zoneinfo.set(f"Combinaison secrète non découverte !\nPartie {numpartie} gagnée par le codeur.")
                 
                 # Incrémenter le score
                 score1+=int((numpartie+1)%2)
