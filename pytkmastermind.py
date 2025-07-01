@@ -112,13 +112,13 @@ def bouton_valider():
                 else :
                     # Si c'est la dernière partie, on affiche le résultat final
                     if score1>score2 :
-                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[0]}")
+                        sv_zoneinfo.set(f"Partie terminée.\nVictoire finale de {listejoueur[0]}")
                     elif score1<score2 :
-                        sv_zoneinfo.set(f"Partie terminée. Victoire finale de {listejoueur[1]}")
+                        sv_zoneinfo.set(f"Partie terminée.\nVictoire finale de {listejoueur[1]}")
                     else :
-                        sv_zoneinfo.set(f"Partie terminée. Egalité entre les deux joueurs")
+                        sv_zoneinfo.set(f"Partie terminée.\nEgalité entre les deux joueurs")
             else:
-                sv_zoneinfo.set(f"Ligne {ligne+1} validée. Sélectionnez la ligne {ligne+2} !")
+                sv_zoneinfo.set(f"Ligne {ligne+1} validée.\nSélectionnez la ligne {ligne+2} !")
                 # On incrémente la ligne et on remet la colonne à zéro
                 ligne+=1
                 colonne=0
@@ -129,7 +129,7 @@ def bouton_valider():
             
         else:
             # On passe au joueur decodeur
-            sv_zoneinfo.set("Code secret validé. C'est au décodeur de jouer !")
+            sv_zoneinfo.set("Code secret validé.\nC'est au décodeur de jouer !")
             
             #Vidage du canvas de codage
             canvaslignes[nblignes].delete('all')
@@ -405,7 +405,7 @@ def initialiser_fenetre_principale(canvasL,canvasR):
     
     # Interversion codeur et décodeur
     decodeur=not decodeur
-    sv_zoneinfo.set("Le codeur doit saisir une combinaison secrète")
+    sv_zoneinfo.set("Le codeur doit saisir \n une combinaison secrète")
     
 
 def creation_fenetre_principale():
@@ -461,7 +461,7 @@ def creation_fenetre_principale():
     espaceaffichage.pack(side="left",padx=0, pady=10, fill="both", expand=True)
     espacejeu.pack(side="left",padx=0, pady=10)   
     espacereponse.pack(side="left",padx=0, pady=10)
-
+    
     # Espace affichage
     sv_nbparties = tk.StringVar()
     sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")  # Valeur initiale
@@ -489,7 +489,7 @@ def creation_fenetre_principale():
     labelscore2.pack(side="top")
     
     sv_zoneinfo = tk.StringVar()
-    sv_zoneinfo.set("Le codeur doit saisir une combinaison secrète")
+    sv_zoneinfo.set("Le codeur doit saisir \n une combinaison secrète")
     labelzoneinfo=tk.Label(espaceaffichage,textvariable=sv_zoneinfo)
     labelzoneinfo.pack(side="top")
     
