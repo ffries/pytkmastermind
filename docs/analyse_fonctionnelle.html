@@ -4,6 +4,11 @@
     <title>Analyse fonctionnelle</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="styles.css"/>
+        <!-- Highlight.js CSS (thème style Spyder-like : vs2015 ou autre) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+        <!-- Highlight.js JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
   </head>
   <body>
     <!-- Header : contient la barre de navigation -->
@@ -28,9 +33,178 @@
     </header>
   
     <main>
-       <section>
-         <h2>Frameworks</h2>
-       </section>
+        <section> 
+            <h2>Objectif principal</h2>
+                <article>
+                    <ul>
+                        <li>Le programme implémente un Mastermind à 2 joueurs (codeur et décodeur) avec plusieurs parties.</li>
+                        <li>Le codeur choisit une combinaison secrète. Le décodeur essaie de la deviner en proposant des combinaisons.</li>
+                        <li>Le système indique à chaque proposition combien de pions sont bien placés et combien sont présents mais mal placés.</li>
+                    </ul>
+                </article>
+        </section>
+
+        <section> 
+            <h2>Structure de données utilisées</h2>
+                <article>
+                <ul>
+                    <li><strong>matjeu</strong> : matrice 2D où chaque ligne représente un essai, et la dernière ligne la combinaison secrète.</li>
+                    <li><strong>matreponse</strong> : matrice 2D stockant les résultats (pions noirs et blancs) pour chaque essai.</li>
+                    <li>Des <strong>variables globales</strong> pour suivre le nombre de colonnes (pions), lignes (essais), joueurs, scores, rôle codeur/décodeur, etc.</li>
+                </ul>
+                </article>
+                <details>
+                    <summary>Exemple des matrices en cours de partie</summary>
+                        <pre>
+                            <div class="matrices-container">
+                                <div>
+                                    <h3>matjeu (11 × 4)</h3>
+                                    <table class="matrice">
+                                        <tbody>
+                                            <tr><td>0</td><td>5</td><td>2</td><td>1</td></tr>
+                                            <tr><td>1</td><td>0</td><td>5</td><td>2</td></tr>
+                                            <tr><td>2</td><td>1</td><td>0</td><td>5</td></tr>
+                                            <tr><td>3</td><td>4</td><td>0</td><td>5</td></tr>
+                                            <tr><td>2</td><td>1</td><td>3</td><td>4</td></tr>
+                                            <tr><td>2</td><td>0</td><td>1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>2</td><td>3</td><td>1</td><td>5</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                <h3>matreponse (10 × 4)</h3>
+                                    <table class="matrice">
+                                        <tbody>
+                                            <tr><td>1</td><td>1</td><td>1</td><td>-1</td></tr>
+                                            <tr><td>1</td><td>1</td><td>1</td><td>-1</td></tr>
+                                            <tr><td>0</td><td>0</td><td>1</td><td>-1</td></tr>
+                                            <tr><td>0</td><td>1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>0</td><td>1</td><td>1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>-1</td><td>-1</td><td>-1</td><td>-1</td></tr>
+                                            <tr><td>0</td><td>1</td><td>3</td><td>2</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="image-slider">
+                                    <img id="image-display" src="img/image1.png" alt="Image 1" />
+                                        <div class="controls">
+                                            <button id="prev-btn">&lt;</button>
+                                            <button id="next-btn">&gt;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </pre>
+                </details>
+            </section>
+            <section>
+            <h2>Aspects techniques et conception</h2>
+                <article>
+                    <ul>
+                        <li>L'interface graphique Tkinter est indépendante de la logique fonctionnelle.</li>
+                        <li>Tkinter ne permet pas de passer des arguments directement aux fonctions de rappel des boutons.</li>
+                        <li>L’usage des variables globales est donc fréquent pour contourner le problème et éviter l'usage multiple de fonctions lambda.</li>
+                    </ul>
+                </article>
+
+        </section>
+
+        <section> 
+            <h2>Fonctions importantes</h2>
+                <article>
+                    <h3>feedback(matJ, matR)</h3>
+                        <details>
+                            <summary>Afficher le code de la fonction <code>feedback()</code></summary>
+                                <pre><code class="language-python">
+def feedback(matJ, matR):
+    """
+    Fonction permettant de compter les pions bien placé, de compter les pions dont la couleur est bonne mais mal placés, puis d'afficher les pions (respectivement noirs et blancs)
+    Parameters
+    ----------
+    matJ : int[nblignes+1][nbcolonnes]
+    matR : int[nblignes][nbcolonnes]
+    ----------
+   Returns bool : permet de savoir si la manche est terminée (True) ou non (False)
+    """
+    global nbcolonnes
+    global nblignes
+    global ligne
+    global pas
+    global rmarqueur
+    global dictcouleursreponse
+    global canvasreponses
+    
+    tupSecret=matJ[nblignes]  # tupSecret est la dernière ligne de la matrice de jeu
+    ListeReponse=matJ[ligne]  # ListeReponse est la ligne en cours
+
+    black = sum(s==g for s,g in zip(tupSecret,ListeReponse)) # Nombre de pions bien placés
+    white = sum(min(tupSecret.count(c), ListeReponse.count(c)) for c in set(ListeReponse)) - black # Nombre de pions corrects mais mal placés
+    
+    # On remplit la matrice réponse avec les blacks et les white
+    for i in range(black):
+        matR[ligne][i]=0   
+    for j in range(white):
+        matR[ligne][black+j]=1
+        
+    # On dessine les pions
+    for i in range(nbcolonnes):
+        if matR[ligne][i]!=-1:
+            xcercle=pas+rmarqueur+i%(nbcolonnes//2++nbcolonnes%2)*(pas+2*rmarqueur)
+            ycercle=pas+rmarqueur+i//(nbcolonnes//2+nbcolonnes%2)*(pas+2*rmarqueur)
+            cercle(canvasreponses[ligne],xcercle,ycercle,rmarqueur,dictcouleursreponse[matR[ligne][i]])
+    
+    if black==nbcolonnes :
+        return True
+    return False
+                                </code></pre>
+                        </details>
+                        <ul>
+                            <li>Cœur du jeu : compare la proposition du joueur <strong>matjeu[ligne]</strong> avec la combinaison secrète <strong>matjeu[nblignes]</strong>.</li>
+                            <li>Cette fonction :
+                                <ul>
+                                    <li>calcule le nombre de pions bien placés (noirs),</li>
+                                    <li>calcule le nombre de pions présents mais mal placés (blancs),</li>
+                                    <li>met à jour la matrice réponse matR pour stocker les résultats,</li>
+                                    <li>Indique si la combinaison est correcte (victoire).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                </article>
+    
+                <article>
+                    <h3>choisircouleur(matJ, numerocouleur, canvasL, bouton_validerligne)</h3>
+                        <ul>
+                            <li>Permet au joueur de choisir une couleur,</li>
+                            <li>Met à jour la matrice et l'affichage,</li>
+                            <li>Gère le bouton valider.</li>
+                        </ul>
+                </article>
+
+                <article>
+                    <h3>bouton_valider()</h3>
+                        <ul>
+                            <li>Gère la validation d'une proposition,</li>
+                            <li>Gère la logique de victoire/défaite et le score,</li>
+                            <li>Gère le changement de rôle avant la nouvelle partie.</li>
+                        </ul>
+                </article>
+
+                <article>
+                    <h3>initialiser_fenetre_principale(canvasL, canvasR)</h3>
+                        <ul>
+                            <li>Réinitialise le plateau et prépare la nouvelle partie, inverse les rôles.</li>
+                        </ul>
+                </article>
+        </section>
     </main>
     
     <footer>
@@ -42,5 +216,49 @@
         <img id="droite" src="img/erasebg-droite.png" height="30" alt="Flèche droite">
       </a>  
      </footer>
-  </body>
+
+    <script>
+        const images = [
+        "img/image01.png",
+        "img/image02.png",
+         "img/image03.png",
+        "img/image04.png",
+        "img/image05.png",
+        "img/image06.png",
+        "img/image07.png",
+        "img/image08.png",
+         "img/image09.png",
+        "img/image10.png",
+        "img/image11.png",
+        "img/image12.png",
+        "img/image13.png",
+         "img/image14.png",
+        ];
+
+        let currentIndex = 0;
+
+        const imageDisplay = document.getElementById("image-display");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+
+        function updateImage() {
+            imageDisplay.src = images[currentIndex];
+            imageDisplay.alt = `Image ${currentIndex + 1}`;
+        }
+
+        prevBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+        });
+
+        nextBtn.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+        });
+
+        // Initialisation au chargement
+        updateImage();
+        </script>
+    </body>
 </html>
+

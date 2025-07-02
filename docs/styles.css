@@ -31,16 +31,14 @@ footer{
   left:0;
   right:0;  
 }
-footer :first-child {
-  align-self: left;
-  
+footer > :nth-child(1) {
+  justify-self: start;
 }
-footer :second-child {
-  align-self: center;
-  
+footer > :nth-child(2) {
+  justify-self: center;
 }
-footer :third-child {
-  align-self: right;
+footer > :nth-child(3) {
+  justify-self: end;
 }
 
 #droite{
@@ -113,6 +111,12 @@ ul{
 li{
     font-size:1.5em;
 }
+ul ul {
+    font-size: 0.65em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 20px;
+}
 
 /* === Liens === */
 a {
@@ -132,6 +136,12 @@ pre {
   font-family: Menlo, Consolas, monospace;
   margin-bottom: 1.5rem;
 }
+pre code {
+  font-size: 1.1em;  /* Ajuste ici la taille (1em = normal, 1.1em = légèrement plus grand, etc.) */
+  font-family: Consolas, Menlo, monospace;
+  line-height: 1.5;
+}
+
 
 /* === Lignes de commande dans les blocs <pre><code> === */
 pre.command-line {
@@ -149,3 +159,101 @@ pre.command-line::before {
 }
 
 
+/* === Résumés et détails === */
+details {
+  margin: 1em 0;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+details summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+.matrices-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: nowrap;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.matrice-block {
+  flex: 0 0 auto;
+  margin: 10px 20px; 
+}
+table.matrice {
+  border-collapse: collapse;
+  font-size: 1em;
+  text-align: center;
+  margin-top: 0.5em;
+}
+table.matrice th,
+table.matrice td {
+  font-size: 1.4em;
+  border: 2px solid #999;
+  padding: 0.4em 0.8em;
+}
+table.matrice thead {
+  background-color: #f0f0f0;
+
+
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.matrices {
+  display: flex;
+  gap: 20px;
+}
+
+.matrice {
+  border-collapse: collapse;
+  border: 1px solid black;
+  margin: 10px;
+  min-width: 200px;
+}
+
+.matrice th, .matrice td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+.image-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+  margin: 0 5px;
+    
+}
+
+.image-slider img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.controls button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+}
