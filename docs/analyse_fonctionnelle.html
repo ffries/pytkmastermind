@@ -205,6 +205,85 @@ def feedback(matJ, matR):
                         </ul>
                 </article>
         </section>
+		       <section>
+        <h2>Décomposition de l'interface graphique</h2>
+			<p>Nous avons décidé d'utiliser tkinter pour créer l'interface de jeu.</p>
+			<ol class="command-line">
+				<li>import tkinter as tk</li>
+			</ol>
+			<p>Le jeu apparaît dans une fenêtre qui s'appelle par défaut root, et qu'on affiche avec la commande root.mainloop()</p>
+			 
+			<ol class="command-line">
+				<li>import tkinter as tk</li>
+				<li>root = tk.Tk()</li>
+				<li>root.mainloop()</li>
+			</ol>
+			<p>Voici un aperçu de la fenêtre</p>
+			<img src="img/eddy/global.png" alt="fenêtre"/>
+			</section>
+			<button class="accordeon">L'espace jeu et réponses</button>
+				<section class="panel">
+					<div>
+						<p>L'espace jeu et l'espace réponse sont deux frames distinctes.</p>
+						<ol class="command-line">
+							<li>espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')</li>
+							<li>espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)</li>
+						</ol>
+						<p>Chacun de ces espaces contient un nombre de canvas égal au nombre de tentatives que le décodeur a pour trouver le code secret,<br/>
+						plus une ligne pour que le codeur rentre son code, qui sera caché par la suite pour le décodeur.</p>
+						<ol class="command-line">
+							<li>for i in range(nblignes+1):</li>
+							<li>&nbsp;&nbsp;&nbsp;&nbsp;canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])</li>
+						</ol>
+						<p>Les espaces jeu et réponses sont d'abord remplis de petit cercles grisés modélisant les trous vides.</br>
+						Lorsqu'un joueur place une bille, elle est modélisée par nouveau cercle de couleur, plus gros.<br/>
+						C'est pareil pour l'espace réponse, dont les objets dessinés sont juste plus petits.</p>
+					</div>
+					<div>
+						<img src="img/eddy/espace1.png" alt="espaces jeu et réponses" style="float: right; margin-left: 1em;"/>
+					</div>
+				</section>
+			<button class="accordeon">L'espace affichage</button>
+				<section class="panel">
+					<div>
+						<p>L'espace affichage est une frame.</p>
+						<ol class="command-line">
+							<li>espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=5, pady=5)</li>
+							<li>espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)</li>
+						</ol>
+						<p>Cet espace contient diverses informations sur la partie en cours : scores, identité du codeur et du décoeur, etc.</p>
+						<ol class="command-line">
+							<li>numpartie=1</li>
+							<li>nbparties=2</li>
+							<li>sv_nbparties = tk.StringVar()</li>
+							<li>sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")</li>
+							<li>labelnbparties = tk.Label(espaceaffichage, textvariable=sv_nbparties)</li>
+							<li>labelnbparties.pack(side="top")</li>
+						</ol>
+					</div>
+					<div>
+						<img src="img/eddy/espace2.png" alt="espace affichage" style="float: right; margin-left: 1em;"/>
+					</div>
+				</section>
+			<button class="accordeon">L'espace commande</button>
+				<section class="panel">
+					<div>
+						<p>L'espace commande est une frame.</p>
+							<ol class="command-line">
+								<li>espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')</li>
+								<li>espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")></li>
+							</ol>
+						<p>Cet espace contient les boutons permettant aux joueurs de modifier l'espace jeu</p>
+						<ol class="command-line">
+							<li>bouton_validerligne = tk.Button(espacecommande,text="Valider ligne", command=bouton_valider)</li>
+							<li>bouton_validerligne.pack(side="left")</li>
+							<li>bouton_validerligne.config(state="disabled")</li>
+						</ol>
+					</div>
+					<div>
+						<img src="img/eddy/espace3.png" alt="espace commande" style="float: right; margin-left: 1em;"/>
+					</div>
+				</section>
     </main>
     
     <footer>
@@ -259,6 +338,7 @@ def feedback(matJ, matR):
         // Initialisation au chargement
         updateImage();
         </script>
+		<script src="eddy.js"></script>
     </body>
 </html>
 
