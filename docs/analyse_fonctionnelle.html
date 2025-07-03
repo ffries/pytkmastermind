@@ -209,7 +209,6 @@ def feedback(matJ, matR):
         <h2>Décomposition de l'interface graphique</h2>
 			<p>Nous avons décidé d'utiliser tkinter pour créer l'interface de jeu.</p>
 			<pre><code class="language-python">import tkinter as tk</code></pre>
-			</ol>
 			<p>Le jeu apparaît dans une fenêtre qui s'appelle par défaut root, et qu'on affiche avec la commande root.mainloop()</p>
 			 
 			<pre><code class="language-python">import tkinter as tk
@@ -232,7 +231,7 @@ root.mainloop()</code></pre>
 							<li>for i in range(nblignes+1):</li>
 							<li>&nbsp;&nbsp;&nbsp;&nbsp;canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])</li>
 						</ol>
-						<p>Les espaces jeu et réponses sont d'abord remplis de petit cercles grisés modélisant les trous vides.</br>
+						<p>Les espaces jeu et réponses sont d'abord remplis de petit cercles grisés modélisant les trous vides.<br/>
 						Lorsqu'un joueur place une bille, elle est modélisée par nouveau cercle de couleur, plus gros.<br/>
 						C'est pareil pour l'espace réponse, dont les objets dessinés sont juste plus petits.</p>
 					</div>
