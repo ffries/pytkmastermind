@@ -233,7 +233,7 @@ def feedback(matJ, matR):
     global dictcouleursreponse
     global canvasreponses
     
-    tupSecret=matJ[nblignes]  # tupSecret est le dernière ligne de la matrice de jeu
+    tupSecret=matJ[nblignes]  # tupSecret est la dernière ligne de la matrice de jeu
     ListeReponse=matJ[ligne]  # ListeReponse est la ligne en cours
 
     black = sum(s==g for s,g in zip(tupSecret,ListeReponse)) # Nombre de pions bien placés
@@ -248,7 +248,7 @@ def feedback(matJ, matR):
     # On dessine les pions
     for i in range(nbcolonnes):
         if matR[ligne][i]!=-1:
-            xcercle=pas+rmarqueur+i%(nbcolonnes//2++nbcolonnes%2)*(pas+2*rmarqueur)
+            xcercle=pas+rmarqueur+i%(nbcolonnes//2+nbcolonnes%2)*(pas+2*rmarqueur)
             ycercle=pas+rmarqueur+i//(nbcolonnes//2+nbcolonnes%2)*(pas+2*rmarqueur)
             cercle(canvasreponses[ligne],xcercle,ycercle,rmarqueur,dictcouleursreponse[matR[ligne][i]])
     
