@@ -221,16 +221,11 @@ root.mainloop()</code></pre>
 				<section class="panel">
 					<div>
 						<p>L'espace jeu et l'espace réponse sont deux frames distinctes.</p>
-						<ol class="command-line">
-							<li>espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')</li>
-							<li>espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)</li>
-						</ol>
-						<p>Chacun de ces espaces contient un nombre de canvas égal au nombre de tentatives que le décodeur a pour trouver le code secret,<br/>
-						plus une ligne pour que le codeur rentre son code, qui sera caché par la suite pour le décodeur.</p>
-						<ol class="command-line">
-							<li>for i in range(nblignes+1):</li>
-							<li>&nbsp;&nbsp;&nbsp;&nbsp;canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])</li>
-						</ol>
+<pre><code class="language-python">espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
+espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=pas, pady=pas)</code></pre>
+						<p>Chacun de ces espaces contient un nombre de canvas égal au nombre de tentatives que le décodeur a pour trouver le code secret, plus une ligne pour que le codeur rentre son code, qui sera caché par la suite pour le décodeur.</p>
+						<pre><code class="language-python">for i in range(nblignes+1):
+  canvasL[i] = tk.Canvas(espacejeu, width=pas+(2*rpion+pas)*nbcolonnes, height=hligne,bg=dictcouleurs[-1])</code></pre>
 						<p>Les espaces jeu et réponses sont d'abord remplis de petit cercles grisés modélisant les trous vides.<br/>
 						Lorsqu'un joueur place une bille, elle est modélisée par nouveau cercle de couleur, plus gros.<br/>
 						C'est pareil pour l'espace réponse, dont les objets dessinés sont juste plus petits.</p>
@@ -243,19 +238,16 @@ root.mainloop()</code></pre>
 				<section class="panel">
 					<div>
 						<p>L'espace affichage est une frame.</p>
-						<ol class="command-line">
-							<li>espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=5, pady=5)</li>
-							<li>espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)</li>
-						</ol>
+<pre><code class="language-python">espaceaffichage=tk.Frame(root, bd=4, relief="raised", padx=5, pady=5)
+espaceaffichage.pack(side="left",padx=0, pady=10, fill="y", expand=0.5)</code></pre>
 						<p>Cet espace contient diverses informations sur la partie en cours : scores, identité du codeur et du décoeur, etc.</p>
-						<ol class="command-line">
-							<li>numpartie=1</li>
-							<li>nbparties=2</li>
-							<li>sv_nbparties = tk.StringVar()</li>
-							<li>sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")</li>
-							<li>labelnbparties = tk.Label(espaceaffichage, textvariable=sv_nbparties)</li>
-							<li>labelnbparties.pack(side="top")</li>
-						</ol>
+            <pre><code class="language-python">
+numpartie=1
+nbparties=2
+sv_nbparties = tk.StringVar()
+sv_nbparties.set(f"Partie {numpartie} sur {nbparties}")
+labelnbparties = tk.Label(espaceaffichage, textvariable=sv_nbparties)
+labelnbparties.pack(side="top")</code></pre>
 					</div>
 					<div>
 						<img src="img/eddy/espace2.png" alt="espace affichage" style="float: right; margin-left: 1em;"/>
@@ -265,15 +257,12 @@ root.mainloop()</code></pre>
 				<section class="panel">
 					<div>
 						<p>L'espace commande est une frame.</p>
-							<ol class="command-line">
-								<li>espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')</li>
-								<li>espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")></li>
-							</ol>
+            <pre><code class="language-python">espacecommande = tk.LabelFrame(root,text="Espace commande",relief='groove')
+espacecommande.pack(side="bottom",padx=10,pady=10,fill="x")</code></pre>
 						<p>Cet espace contient les boutons permettant aux joueurs de modifier l'espace jeu</p>
-						<ol class="command-line">
-							<li>bouton_validerligne = tk.Button(espacecommande,text="Valider ligne", command=bouton_valider)</li>
-							<li>bouton_validerligne.pack(side="left")</li>
-							<li>bouton_validerligne.config(state="disabled")</li>
+            <pre><code class="language-python">bouton_validerligne = tk.Button(espacecommande,text="Valider ligne", command=bouton_valider)
+bouton_validerligne.pack(side="left")
+bouton_validerligne.config(state="disabled")</code></pre>
 						</ol>
 					</div>
 					<div>
